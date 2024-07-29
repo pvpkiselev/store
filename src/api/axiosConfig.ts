@@ -1,5 +1,5 @@
 import axios, { HttpStatusCode } from 'axios';
-import { API_URL, FETCH_DATA_ERROR } from './constants';
+import { BASE_URL, FETCH_DATA_ERROR } from './constants';
 
 export interface Config {
   headers?: Record<string, string>;
@@ -10,7 +10,7 @@ export interface Config {
 }
 
 const axiosInstance = axios.create({
-  baseURL: API_URL,
+  baseURL: BASE_URL,
   headers: {
     accept: 'application/json',
     'Content-Type': 'application/json',
