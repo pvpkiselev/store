@@ -17,12 +17,12 @@ const axiosInstance = axios.create({
   },
 });
 
-export const fetchData = async <T>(config: Config): Promise<T> => {
+export const fetchData = async (config: Config) => {
   try {
     const response = await axiosInstance(config);
     const isSuccess = response.status === HttpStatusCode.Ok || HttpStatusCode.Created;
     if (isSuccess) {
-      return response.data;
+      return response;
     } else {
       throw new Error(FETCH_DATA_ERROR);
     }

@@ -1,59 +1,41 @@
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  TextField,
-} from '@mui/material';
+import { Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import LoadingButton from '@mui/lab/LoadingButton';
+
+import React from 'react';
 
 interface AuthModalProps {
   open: boolean;
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
-  onClose: () => void;
   title: string;
-  description: string;
-  id: string;
-  name: string;
-  label: string;
-  type: 'text' | 'email' | 'password';
   buttonText: string;
+  children: React.ReactNode;
+  isPending: boolean;
 }
 
 export default function AuthModal(props: AuthModalProps) {
-  const { open, onSubmit, onClose, title, description, id, name, label, type, buttonText } = props;
+  const { isPending, open, onSubmit, title, buttonText, children } = props;
 
   return (
-    <div>
-      <Dialog
-        open={open}
-        onClose={onClose}
-        PaperProps={{
-          component: 'form',
-          onSubmit: onSubmit,
-        }}
-      >
-        <DialogTitle>{title}</DialogTitle>
-        <DialogContent>
-          <DialogContentText>{description}</DialogContentText>
-          <TextField
-            autoFocus
-            required
-            margin="dense"
-            id={id}
-            name={name}
-            label={label}
-            type={type}
-            fullWidth
-            variant="standard"
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={onClose}>Cancel</Button>
-          <Button type="submit">{buttonText}</Button>
-        </DialogActions>
-      </Dialog>
-    </div>
+    <Dialog
+      open={open}
+      PaperProps={{
+        sx: {
+          width: '600px',
+          p: 3,
+        },
+        component: 'form',
+        onSubmit: onSubmit,
+      }}
+    >
+      <DialogTitle variant="h4" fontWeight={400}>
+        {title}
+      </DialogTitle>
+      <DialogContent>{children}</DialogContent>
+      <DialogActions>
+        <LoadingButton loading={isPending} variant="contained" fullWidth type="submit">
+          {buttonText}
+        </LoadingButton>
+      </DialogActions>
+    </Dialog>
   );
 }
