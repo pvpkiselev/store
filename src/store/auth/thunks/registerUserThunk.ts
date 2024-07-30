@@ -4,7 +4,7 @@ interface RegisterUserPayload {
   data: {
     name: string;
     email: string;
-    id: string;
+    id: number;
     avatar: string;
     role: string;
   };

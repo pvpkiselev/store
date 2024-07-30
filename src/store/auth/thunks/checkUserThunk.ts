@@ -4,7 +4,7 @@ interface CheckUserPayload {
   data: {
     name: string;
     email: string;
-    id: string;
+    id: number;
     avatar: string;
     role: string;
   };
@@ -21,7 +21,7 @@ export const checkUser = createAppAsyncThunk<
   CheckUserPayload,
   { token: string },
   { rejectValue: CheckUserError }
->('auth/loginUser', async ({ token }, thunkAPI) => {
+>('auth/checkUser', async ({ token }, thunkAPI) => {
   try {
     const userResponse = await thunkAPI.extra.api.auth.getUserSession(token);
     const { data } = userResponse;

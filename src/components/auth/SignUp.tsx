@@ -2,14 +2,16 @@ import AuthModal from '../modals/AuthModal';
 import { Button, DialogContentText, Stack, TextField } from '@mui/material';
 import { useState } from 'react';
 import useAuth from '@/hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
 
 function SignUp(props: { isHasAccount: boolean; toggleModal: () => void }) {
   const [isPending, setIsPending] = useState(false);
+  const navigate = useNavigate();
   const { handleSignUp } = useAuth();
   const { isHasAccount, toggleModal } = props;
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    handleSignUp(event, setIsPending, toggleModal);
+    handleSignUp(event, navigate);
   }
 
   return (
