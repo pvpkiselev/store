@@ -1,13 +1,13 @@
 import { Config, fetchData } from './axiosConfig';
 import { DEFAULT_AVATAR_URL } from './constants';
-import { CreateUserResponse } from './models';
+import { UserResponse } from './models';
 import { resources } from './resources';
 
 const fetchCreateUser = async (
   name: string,
   email: string,
   password: string
-): Promise<CreateUserResponse> => {
+): Promise<UserResponse> => {
   const { users } = resources.auth;
   const url = `${users}/`;
   const data = { name, email, password, avatar: DEFAULT_AVATAR_URL };
@@ -18,8 +18,13 @@ const fetchCreateUser = async (
     data,
   };
 
-  const response = await fetchData(config);
-  return response;
+  try {
+    const responseData = await fetchData<UserResponse>(config);
+    return responseData;
+  } catch (error) {
+    console.error('fetchCreateUser Error', error);
+    throw error;
+  }
 };
 
 export default fetchCreateUser;

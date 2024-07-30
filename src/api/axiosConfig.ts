@@ -17,12 +17,13 @@ const axiosInstance = axios.create({
   },
 });
 
-export const fetchData = async (config: Config) => {
+export const fetchData = async <T>(config: Config): Promise<T> => {
   try {
     const response = await axiosInstance(config);
+
     const isSuccess = response.status === HttpStatusCode.Ok || HttpStatusCode.Created;
     if (isSuccess) {
-      return response;
+      return response.data;
     } else {
       throw new Error(FETCH_DATA_ERROR);
     }
@@ -35,6 +36,8 @@ export const fetchData = async (config: Config) => {
 const setAxiosAuthToken = (token: string | null) => {
   if (token) {
     axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  } else {
+    delete axiosInstance.defaults.headers.common['Authorization'];
   }
 };
 

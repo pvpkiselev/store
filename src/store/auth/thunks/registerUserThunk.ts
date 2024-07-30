@@ -1,7 +1,7 @@
 import { createAppAsyncThunk } from '@/store/redux';
 
 interface RegisterUserPayload {
-  data: {
+  userData: {
     name: string;
     email: string;
     id: number;
@@ -17,19 +17,19 @@ interface RegisterUserError {
 
 const registerUserErrorMessage = 'Register User Error';
 
-export const registerUser = createAppAsyncThunk<
+export const registerUserThunk = createAppAsyncThunk<
   RegisterUserPayload,
   { name: string; email: string; password: string },
   { rejectValue: RegisterUserError }
 >('auth/registerUser', async ({ name, email, password }, thunkAPI) => {
   try {
     const createUserResponse = await thunkAPI.extra.api.auth.fetchCreateUser(name, email, password);
-    const { data } = createUserResponse;
+    const userData = createUserResponse;
 
     const authResponse = await thunkAPI.extra.api.auth.fetchAuthentication(email, password);
-    const { access_token } = authResponse.data;
+    const { access_token } = authResponse;
 
-    return { data, access_token };
+    return { userData, access_token };
   } catch (error) {
     return thunkAPI.rejectWithValue({ errorMessage: registerUserErrorMessage });
   }
