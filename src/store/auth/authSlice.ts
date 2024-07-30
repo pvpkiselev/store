@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { registerUser } from './thunks/registerUserThunk';
-import { loginUser } from './thunks/loginUserThunk';
-import { checkUser } from './thunks/checkUserThunk';
+import { registerUserThunk } from './thunks/registerUserThunk';
+import { loginUserThunk } from './thunks/loginUserThunk';
+import { checkUserThunk } from './thunks/checkUserThunk';
 
 type AuthState = {
   isAuth: boolean;
@@ -35,58 +35,58 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(registerUser.pending, (state) => {
+      .addCase(registerUserThunk.pending, (state) => {
         state.status = 'pending';
       })
-      .addCase(registerUser.fulfilled, (state, action) => {
-        state.name = action.payload.data.name;
-        state.email = action.payload.data.email;
-        state.id = action.payload.data.email.toString();
-        state.avatar = action.payload.data.avatar;
-        state.role = action.payload.data.role;
+      .addCase(registerUserThunk.fulfilled, (state, action) => {
+        state.name = action.payload.userData.name;
+        state.email = action.payload.userData.email;
+        state.id = action.payload.userData.email.toString();
+        state.avatar = action.payload.userData.avatar;
+        state.role = action.payload.userData.role;
         state.isAuth = true;
         state.status = 'fulfilled';
         state.error = undefined;
       })
-      .addCase(registerUser.rejected, (state, action) => {
+      .addCase(registerUserThunk.rejected, (state, action) => {
         state.isAuth = false;
         state.status = 'rejected';
         state.error = action.payload?.errorMessage;
       })
 
-      .addCase(loginUser.pending, (state) => {
+      .addCase(loginUserThunk.pending, (state) => {
         state.status = 'pending';
       })
-      .addCase(loginUser.fulfilled, (state, action) => {
-        state.name = action.payload.data.name;
-        state.email = action.payload.data.email;
-        state.id = action.payload.data.email.toString();
-        state.avatar = action.payload.data.avatar;
-        state.role = action.payload.data.role;
+      .addCase(loginUserThunk.fulfilled, (state, action) => {
+        state.name = action.payload.userData.name;
+        state.email = action.payload.userData.email;
+        state.id = action.payload.userData.email.toString();
+        state.avatar = action.payload.userData.avatar;
+        state.role = action.payload.userData.role;
         state.isAuth = true;
         state.status = 'fulfilled';
         state.error = undefined;
       })
-      .addCase(loginUser.rejected, (state, action) => {
+      .addCase(loginUserThunk.rejected, (state, action) => {
         state.isAuth = false;
         state.status = 'rejected';
         state.error = action.payload?.errorMessage;
       })
 
-      .addCase(checkUser.pending, (state) => {
+      .addCase(checkUserThunk.pending, (state) => {
         state.status = 'pending';
       })
-      .addCase(checkUser.fulfilled, (state, action) => {
-        state.name = action.payload.data.name;
-        state.email = action.payload.data.email;
-        state.id = action.payload.data.email.toString();
-        state.avatar = action.payload.data.avatar;
-        state.role = action.payload.data.role;
+      .addCase(checkUserThunk.fulfilled, (state, action) => {
+        state.name = action.payload.userData.name;
+        state.email = action.payload.userData.email;
+        state.id = action.payload.userData.email.toString();
+        state.avatar = action.payload.userData.avatar;
+        state.role = action.payload.userData.role;
         state.isAuth = true;
         state.status = 'fulfilled';
         state.error = undefined;
       })
-      .addCase(checkUser.rejected, (state, action) => {
+      .addCase(checkUserThunk.rejected, (state, action) => {
         state.isAuth = false;
         state.status = 'rejected';
         state.error = action.payload?.errorMessage;
@@ -94,4 +94,5 @@ const authSlice = createSlice({
   },
 });
 
+export const { logout } = authSlice.actions;
 export const authReducer = authSlice.reducer;

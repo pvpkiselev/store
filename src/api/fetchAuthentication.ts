@@ -16,8 +16,14 @@ const fetchAuthentication = async (email: string, password: string): Promise<Use
     url,
     data,
   };
-  const response = await fetchData(config);
-  return response;
+
+  try {
+    const responseData = await fetchData<UserAuth>(config);
+    return responseData;
+  } catch (error) {
+    console.error('fetchAuthentication Error', error);
+    throw error;
+  }
 };
 
 export default fetchAuthentication;
