@@ -6,6 +6,7 @@ import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 import Root from './routes/Root';
 import ErrorPage from './routes/ErrorPage';
 import Home from './routes/Home';
+import Auth from './routes/Auth';
 
 const router = createBrowserRouter([
   {
@@ -21,14 +22,14 @@ const router = createBrowserRouter([
         path: 'home',
         element: <Home />,
       },
+      // { TODO:
+      //   path: 'card/:cardId',
+      //   element: <ProductCard />,
+      //   loader: productCardLoader,
+      // },
       {
-        path: 'card/:cardId',
-        element: <ProductCard />,
-        loader: productCardLoader,
-      },
-      {
-        path: 'login',
-        element: <Login />,
+        path: 'auth',
+        element: <Auth />,
       },
     ],
   },
