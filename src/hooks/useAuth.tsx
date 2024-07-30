@@ -1,14 +1,14 @@
 import { setAxiosAuthToken } from '@/api/axiosConfig';
-import fetchAuthentication from '@/api/fetchAuthentication';
-import fetchCreateUser from '@/api/fetchCreateUser';
-import getUserSession from '@/api/getUserSession';
-import { HttpStatusCode } from 'axios';
+import { loginUser } from '@/store/auth/thunks/loginUserThunk';
+import { registerUser } from '@/store/auth/thunks/registerUserThunk';
+import { useAppDispatch } from '@/store/redux';
 import Cookies from 'js-cookie';
 
 function useAuth() {
+  const dispatch = useAppDispatch();
+
   async function handleLogin(
     event: React.FormEvent<HTMLFormElement>,
-    setIsPending: (pending: boolean) => void,
     navigate: (link: string) => void
   ) {
     event.preventDefault();
@@ -17,54 +17,36 @@ function useAuth() {
     const password = (form.elements.namedItem('password') as HTMLInputElement).value.trim();
     const email = (form.elements.namedItem('email') as HTMLInputElement).value.trim();
 
-    try {
-      setIsPending(true);
-      const response = await fetchAuthentication(email, password);
-      const isSuccess = response.status === HttpStatusCode.Ok || HttpStatusCode.Created;
+    const response = await dispatch(loginUser({ email, password }));
 
-      if (isSuccess) {
-        const token = response.data.access_token;
-        setAxiosAuthToken(token);
-        Cookies.set('token', token);
-      }
-
-      const responseUserSession = await getUserSession();
-      const isSuccessUserSession =
-        responseUserSession.status === HttpStatusCode.Ok || HttpStatusCode.Created;
-
-      if (isSuccessUserSession) {
-        navigate('/home');
-      }
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsPending(false);
+    if (loginUser.fulfilled.match(response)) {
+      const token = response.payload.access_token;
+      setAxiosAuthToken(token);
+      Cookies.set('token', token);
       form.reset();
+      navigate('/home');
     }
   }
 
   async function handleSignUp(
     event: React.FormEvent<HTMLFormElement>,
-    setIsPending: (pending: boolean) => void,
-    toggleModal: () => void
+    navigate: (link: string) => void
   ) {
     event.preventDefault();
     const form = event.currentTarget as HTMLFormElement;
 
     const name = (form.elements.namedItem('name') as HTMLInputElement).value.trim();
-    const emailInput = (form.elements.namedItem('email') as HTMLInputElement).value.trim();
+    const email = (form.elements.namedItem('email') as HTMLInputElement).value.trim();
     const password = (form.elements.namedItem('password') as HTMLInputElement).value.trim();
 
-    try {
-      setIsPending(true);
-      const response = await fetchCreateUser(name, emailInput, password);
-      const { email } = response.data;
-      localStorage.setItem('email', email);
-      toggleModal();
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsPending(false);
+    const response = await dispatch(registerUser({ name, email, password }));
+
+    if (registerUser.fulfilled.match(response)) {
+      const token = response.payload.access_token;
+      setAxiosAuthToken(token);
+      Cookies.set('token', token);
+      form.reset();
+      navigate('/home');
     }
   }
 

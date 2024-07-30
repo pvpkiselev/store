@@ -6,13 +6,13 @@ import { useNavigate } from 'react-router-dom';
 
 function SignIn(props: { isHasAccount: boolean; toggleModal: () => void }) {
   const [isPending, setIsPending] = useState(false);
-  const { handleLogin } = useAuth();
   const navigate = useNavigate();
+  const { handleLogin } = useAuth();
   const { isHasAccount, toggleModal } = props;
   const email = localStorage.getItem('email');
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    handleLogin(event, setIsPending, navigate);
+    handleLogin(event, navigate);
   }
 
   return (
