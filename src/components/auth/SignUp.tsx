@@ -1,31 +1,15 @@
-import fetchCreateUser from '@/api/fetchCreateUser';
 import AuthModal from '../modals/AuthModal';
 import { Button, DialogContentText, Stack, TextField } from '@mui/material';
 import { useState } from 'react';
+import useAuth from '@/hooks/useAuth';
 
 function SignUp(props: { isHasAccount: boolean; toggleModal: () => void }) {
   const [isPending, setIsPending] = useState(false);
+  const { handleSignUp } = useAuth();
   const { isHasAccount, toggleModal } = props;
 
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const form = event.currentTarget as HTMLFormElement;
-
-    const name = (form.elements.namedItem('name') as HTMLInputElement).value.trim();
-    const email = (form.elements.namedItem('email') as HTMLInputElement).value.trim();
-    const password = (form.elements.namedItem('password') as HTMLInputElement).value.trim();
-
-    try {
-      setIsPending(true);
-      const response = await fetchCreateUser(name, email, password);
-      const { emailFromData } = await response.data;
-      localStorage.setItem('email', emailFromData);
-      toggleModal();
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsPending(false);
-    }
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    handleSignUp(event, setIsPending, toggleModal);
   }
 
   return (

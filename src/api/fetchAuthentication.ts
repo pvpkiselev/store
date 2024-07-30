@@ -1,7 +1,8 @@
 import { Config, fetchData } from './axiosConfig';
+import { UserAuth } from './models';
 import { resources } from './resources';
 
-const fetchAuthentication = async (email: string, password: string) => {
+const fetchAuthentication = async (email: string, password: string): Promise<UserAuth> => {
   const { auth, login } = resources.auth;
   const url = `${auth}/${login}`;
 

@@ -1,10 +1,20 @@
 interface CreateUserResponse {
-  email: string;
-  password: string;
-  name: string;
-  avatar: string;
-  role: string;
-  id: number;
+  data: {
+    email: string;
+    password: string;
+    name: string;
+    avatar: string;
+    role: string;
+    id: number;
+  };
+  status: number;
 }
 
-export type { CreateUserResponse };
+interface UserAuth {
+  data: {
+    access_token: string;
+  };
+  status: number;
+}
+
+export type { CreateUserResponse, UserAuth };
