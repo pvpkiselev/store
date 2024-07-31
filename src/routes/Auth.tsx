@@ -19,6 +19,10 @@ function Auth() {
     setIsRegistered(!isRegistered);
   };
 
+  const handleBack = () => {
+    navigate(from, { replace: true });
+  };
+
   const handleLoginSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = event.currentTarget;
@@ -61,17 +65,11 @@ function Auth() {
       <AuthModal
         onToggle={handleToggleModal}
         onSubmit={actualHandler}
+        onHandleBack={handleBack}
         isRegistered={isRegistered}
         isPending={isPending}
         isOpen={true}
       />
-      {/* <AuthModal
-        onToggle={handleToggleModal}
-        onSubmit={handleRegisterSubmit}
-        isRegistered={isRegistered}
-        isPending={isPending}
-        isOpen={isRegistered}
-      /> */}
     </>
   );
 }

@@ -6,21 +6,24 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  Link,
   Stack,
   TextField,
 } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
+import { ArrowBack } from '@mui/icons-material';
 
 interface AuthModalProps {
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   onToggle: () => void;
+  onHandleBack: () => void;
   isPending: boolean;
   isRegistered: boolean;
   isOpen: boolean;
 }
 
 function AuthModal(props: AuthModalProps) {
-  const { onSubmit, onToggle, isPending, isRegistered, isOpen } = props;
+  const { onSubmit, onToggle, onHandleBack, isPending, isRegistered, isOpen } = props;
   const title = isRegistered ? 'Sign in' : 'Sign up';
   const dialogContentText = isRegistered ? 'New user?' : 'Already have an account?';
   const toggleText = isRegistered ? 'Create an account' : 'Sign in';
@@ -40,39 +43,47 @@ function AuthModal(props: AuthModalProps) {
         component: 'form',
         onSubmit: onSubmit,
       }}
-      slotProps={{
-        backdrop: {
-          sx: {
-            backgroundColor: 'transparent',
-          },
-        },
-      }}
+      hideBackdrop={true}
     >
-      <DialogTitle variant="h4" fontWeight={400} sx={{ p: 0 }}>
-        {title}
-      </DialogTitle>
+      <Stack direction="row" alignItems="center" justifyContent="space-between">
+        <DialogTitle variant="h4" fontWeight={400} sx={{ p: 0 }}>
+          {title}
+        </DialogTitle>
+        <Button onClick={onHandleBack} startIcon={<ArrowBack />}>
+          Back
+        </Button>
+      </Stack>
       <DialogContent sx={{ p: 0 }}>
         <Stack flexDirection="column" gap={4}>
-          <DialogContentText>
+          <DialogContentText display="flex" gap={2}>
             {dialogContentText}
-            <Button onClick={onToggle}>{toggleText}</Button>
+            <Link onClick={onToggle} sx={{ textDecoration: 'none', cursor: 'pointer' }}>
+              {toggleText}
+            </Link>
           </DialogContentText>
           {!isRegistered && (
-            <TextField name="userName" label="Name" type="text" required fullWidth />
+            <TextField size="small" name="userName" label="Name" type="text" required fullWidth />
           )}
-          <TextField name="email" label="Email address" type="email" required fullWidth />
-          <TextField name="password" label="Password" type="password" required fullWidth />
+          <TextField
+            size="small"
+            name="email"
+            label="Email address"
+            type="email"
+            required
+            fullWidth
+          />
+          <TextField
+            size="small"
+            name="password"
+            label="Password"
+            type="password"
+            required
+            fullWidth
+          />
         </Stack>
       </DialogContent>
       <DialogActions sx={{ p: 0 }}>
-        <LoadingButton
-          size="large"
-          loading={isPending}
-          variant="contained"
-          type="submit"
-          fullWidth
-          disableElevation
-        >
+        <LoadingButton loading={isPending} variant="contained" type="submit" fullWidth>
           {submitButtonText}
         </LoadingButton>
       </DialogActions>
