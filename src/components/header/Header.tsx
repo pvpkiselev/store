@@ -1,37 +1,12 @@
-import useAuth from '@/hooks/useAuth';
 import { selectIsAuth } from '@/store/auth/authSelectors';
 import { useAppSelector } from '@/store/redux';
-import { Logout, Person, ShoppingCart } from '@mui/icons-material';
-import { AppBar, Container, IconButton, Stack } from '@mui/material';
+import { AppBar, Container, Stack } from '@mui/material';
 import { Link } from 'react-router-dom';
 import Logo from '@public/logo/logo.svg';
 import Search from '../search/Search';
-
-const LoginButton = () => (
-  <Link to="/auth" style={{ textDecoration: 'none', color: 'inherit' }}>
-    <IconButton size="large" aria-label="login">
-      <Person fontSize="inherit" />
-    </IconButton>
-  </Link>
-);
-
-const LogoutButton = () => {
-  const { handleLogout } = useAuth();
-
-  return (
-    <IconButton size="large" aria-label="logout" onClick={handleLogout}>
-      <Logout fontSize="inherit" />
-    </IconButton>
-  );
-};
-
-const BasketButton = () => (
-  <Link to="#" style={{ textDecoration: 'none', color: 'inherit' }}>
-    <IconButton size="large" aria-label="login">
-      <ShoppingCart fontSize="inherit" />
-    </IconButton>
-  </Link>
-);
+import BasketButton from './buttons/BasketButton';
+import LogoutButton from './buttons/LogoutButton';
+import LoginButton from './buttons/LoginButton';
 
 function Header() {
   const isAuth = useAppSelector(selectIsAuth);
