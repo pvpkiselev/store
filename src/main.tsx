@@ -29,11 +29,11 @@ const router = createBrowserRouter([
       //   element: <ProductCard />,
       //   loader: productCardLoader,
       // },
+      {
+        path: '/auth',
+        element: <Auth />,
+      },
     ],
-  },
-  {
-    path: '/auth',
-    element: <Auth />,
   },
 ]);
 
