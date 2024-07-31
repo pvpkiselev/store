@@ -43,12 +43,6 @@ function useAuth() {
     [dispatch]
   );
 
-  const handleLogout = useCallback(() => {
-    Cookies.remove('token');
-    setAxiosAuthToken(null);
-    dispatch(logout());
-  }, [dispatch]);
-
   const handleCheckAuth = useCallback(async () => {
     try {
       const token = Cookies.get('token');
@@ -62,7 +56,13 @@ function useAuth() {
       console.error(error);
       dispatch(logout());
     }
-  }, [dispatch, handleLogin]);
+  }, [dispatch]);
+
+  const handleLogout = useCallback(() => {
+    Cookies.remove('token');
+    setAxiosAuthToken(null);
+    dispatch(logout());
+  }, [dispatch]);
 
   return { handleLogin, handleRegister, handleLogout, handleCheckAuth };
 }
