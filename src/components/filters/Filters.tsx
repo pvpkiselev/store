@@ -27,7 +27,7 @@ function Filters() {
           <Dialog fullScreen open={open} onClose={handleClose}>
             <Box p={4}>
               <Stack direction="row" justifyContent="space-between" alignItems="center">
-                <Typography fontSize="24px" variant="h6">
+                <Typography fontSize="24px" variant="h3">
                   Filters
                 </Typography>
                 <IconButton onClick={handleClose}>
@@ -41,7 +41,7 @@ function Filters() {
         </>
       ) : (
         <>
-          <Typography fontSize="24px" variant="h6">
+          <Typography fontSize="24px" variant="h3">
             Filters
           </Typography>
           <Categories />
