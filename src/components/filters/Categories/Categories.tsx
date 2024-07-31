@@ -1,63 +1,35 @@
-import { useAppDispatch } from '@/store/redux';
-import {
-  Checkbox,
-  FormControl,
-  FormControlLabel,
-  FormGroup,
-  FormLabel,
-  Typography,
-} from '@mui/material';
+import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
+import { useState } from 'react';
+
+import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import { useState } from 'react';
 
 function Categories() {
-  const dispatch = useAppDispatch();
-  const [selectedCategories, setSelectedCategories] = useState<number[]>([]);
+  const [category, setCategory] = useState('');
 
-  // const handleCategoriesToggle = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   const categoryId = Number(event.target.id);
-  //   setSelectedCategories((prev) => {
-  //     const isSelected = prev.includes(categoryId);
-  //     const newSelected = isSelected
-  //       ? prev.filter((id) => id !== categoryId)
-  //       : [...prev, categoryId];
-  //     dispatch(toggledCategories(newSelected));
-  //     return newSelected;
-  //   });
-  // };
+  const handleChange = (event: SelectChangeEvent) => {
+    setCategory(event.target.value as string);
+  };
 
   return (
-    <FormControl component="fieldset" variant="standard" fullWidth>
-      <Typography fontSize={18}>Categories</Typography>
-      <FormLabel
-        sx={{
-          height: 320,
-          width: '100%',
-          overflowY: 'auto',
-        }}
+    <FormControl fullWidth>
+      <InputLabel id="category-label">Category</InputLabel>
+      <Select
+        onChange={handleChange}
+        value={category}
+        autoWidth
+        label="Category"
+        labelId="category-label"
       >
-        {/* <FormGroup sx={{ pl: 2, width: '100%' }}>
-          <FormControlLabel
-            label="1cat"
-            control={
-              <Checkbox
-                name="1cat"
-                id="1"
-                checked={selectedCategories.includes(1)}
-                onChange={handleCategoriesToggle}
-              />
-            }
-          />
-          <FormControlLabel label="2cat" control={<Checkbox name="2cat" />} />
-          <FormControlLabel label="2cat" control={<Checkbox name="2cat" />} />
-          <FormControlLabel label="2cat" control={<Checkbox name="2cat" />} />
-          <FormControlLabel label="2cat" control={<Checkbox name="2cat" />} />
-          <FormControlLabel label="2cat" control={<Checkbox name="2cat" />} />
-          <FormControlLabel label="2cat" control={<Checkbox name="2cat" />} />
-          <FormControlLabel label="2cat" control={<Checkbox name="2cat" />} />
-        </FormGroup> */}
-      </FormLabel>
+        <MenuItem value="">
+          <em>None</em>
+        </MenuItem>
+        <MenuItem value="1">Category1</MenuItem>
+        <MenuItem value="2">Category2</MenuItem>
+      </Select>
     </FormControl>
   );
 }
 
 export default Categories;
+
