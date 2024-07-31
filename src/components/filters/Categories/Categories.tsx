@@ -1,15 +1,15 @@
 import { Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel } from '@mui/material';
 
-function Categories(props: { height: string; width: string }) {
-  const { height, width } = props;
+function Categories(props: { height: string }) {
+  const { height } = props;
 
   return (
     <FormControl
       component="fieldset"
       variant="standard"
       sx={{
-        maxHeight: height,
-        width: width,
+        height: height,
+        width: '100%',
         overflowY: 'auto',
       }}
     >

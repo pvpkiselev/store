@@ -1,39 +1,51 @@
-import { Button, Stack, Typography, useMediaQuery } from '@mui/material';
+import { Button, IconButton, Stack, Typography, useMediaQuery, Dialog, Box } from '@mui/material';
 import Categories from './Categories/Categories';
 import PriceRange from './PriceRange/PriceRange';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { useState } from 'react';
-import MobileFilters from './MobileFilters';
+import { Close } from '@mui/icons-material';
 
 function Filters() {
   const [open, setOpen] = useState(false);
-  const isMobile = useMediaQuery('(max-width:420px');
+  const isMobile = useMediaQuery('(max-width:420px)');
 
-  function handleOpen() {
+  const handleOpen = () => {
     setOpen(true);
-  }
+  };
 
-  function handleClose() {
+  const handleClose = () => {
     setOpen(false);
-  }
+  };
 
   return (
-    <Stack spacing={4}>
-      {isMobile && (
+    <Stack spacing={4} maxWidth={!isMobile ? 200 : '100%'}>
+      {isMobile ? (
         <>
           <Button onClick={handleOpen} fullWidth variant="contained" startIcon={<FilterListIcon />}>
             Filters
           </Button>
-          <MobileFilters open={open} onClose={handleClose} />
+          <Dialog fullScreen open={open} onClose={handleClose}>
+            <Box p={4}>
+              <Stack direction="row" justifyContent="space-between" alignItems="center">
+                <Typography fontSize="24px" variant="h6">
+                  Filters
+                </Typography>
+                <IconButton onClick={handleClose}>
+                  <Close />
+                </IconButton>
+              </Stack>
+              <Categories height="320px" />
+              <PriceRange />
+            </Box>
+          </Dialog>
         </>
-      )}
-      {!isMobile && (
+      ) : (
         <>
           <Typography fontSize="24px" variant="h6">
             Filters
           </Typography>
-          <Categories width="320px" height="320px" />
-          <PriceRange width="200px" />
+          <Categories height="320px" />
+          <PriceRange />
         </>
       )}
     </Stack>

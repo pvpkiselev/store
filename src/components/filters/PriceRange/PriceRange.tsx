@@ -7,9 +7,7 @@ function valuetext(value: number) {
 
 const minDistance = 10;
 
-function PriceRange(props: { width: string }) {
-  const { width } = props;
-
+function PriceRange() {
   const [value, setValue] = useState<number[]>([25, 50]);
   const [min] = useState(0);
   const [max] = useState(300);
@@ -45,7 +43,7 @@ function PriceRange(props: { width: string }) {
 
   return (
     <>
-      <Box maxWidth={width}>
+      <Box>
         <Typography fontSize="18px" variant="h6">
           Price
         </Typography>
