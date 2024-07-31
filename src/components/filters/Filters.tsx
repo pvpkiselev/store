@@ -1,55 +1,119 @@
-import { Button, IconButton, Stack, Typography, useMediaQuery, Dialog, Box } from '@mui/material';
+import {
+  Button,
+  IconButton,
+  Stack,
+  Typography,
+  useMediaQuery,
+  Dialog,
+  Box,
+  Paper,
+} from '@mui/material';
 import Categories from './Categories/Categories';
 import PriceRange from './PriceRange/PriceRange';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { useState } from 'react';
 import { Close } from '@mui/icons-material';
+import { theme } from '@/theme/theme';
 
 function Filters() {
-  const [open, setOpen] = useState(false);
-  const isMobile = useMediaQuery('(max-width:620px)');
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-  const handleOpen = () => {
-    setOpen(true);
+  const handleMobileOpen = () => {
+    setMobileOpen(true);
   };
 
-  const handleClose = () => {
-    setOpen(false);
+  const handleMobileClose = () => {
+    setMobileOpen(false);
   };
 
   return (
-    <Stack spacing={4} minWidth={!isMobile ? 200 : '100%'}>
-      {isMobile ? (
-        <>
-          <Button onClick={handleOpen} fullWidth variant="contained" startIcon={<FilterListIcon />}>
+    <Box flexBasis={{ sm: '100%', md: '200px' }} flexGrow={0} flexShrink={0}>
+      {isMobile && (
+        <Box>
+          <Button
+            onClick={handleMobileOpen}
+            fullWidth
+            variant="contained"
+            startIcon={<FilterListIcon />}
+          >
             Filters
           </Button>
-          <Dialog fullScreen open={open} onClose={handleClose}>
-            <Box p={4}>
-              <Stack direction="row" justifyContent="space-between" alignItems="center">
-                <Typography fontSize="24px" variant="h3">
-                  Filters
-                </Typography>
-                <IconButton onClick={handleClose}>
-                  <Close />
-                </IconButton>
-              </Stack>
-              <Categories />
-              <PriceRange />
-            </Box>
-          </Dialog>
-        </>
-      ) : (
-        <>
-          <Typography fontSize="24px" variant="h3">
-            Filters
-          </Typography>
+        </Box>
+      )}
+      <Paper
+        elevation={0}
+        sx={{
+          display: { xs: mobileOpen ? 'block' : 'none', sm: 'block' },
+          position: { xs: 'fixed', sm: 'relative' },
+          ...(isMobile && {
+            bottom: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            zIndex: 1000,
+            paddingInline: 4,
+            paddingBlock: 6,
+            borderRadius: 0,
+          }),
+        }}
+      >
+        <Stack rowGap={6}>
+          <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
+            <Typography fontSize="24px" variant="h3" component="h2">
+              Filters
+            </Typography>
+            {isMobile && (
+              <IconButton aria-label="close" onClick={handleMobileClose}>
+                <Close />
+              </IconButton>
+            )}
+          </Stack>
           <Categories />
           <PriceRange />
-        </>
-      )}
-    </Stack>
+        </Stack>
+      </Paper>
+    </Box>
   );
 }
 
 export default Filters;
+
+{
+  /* <Stack spacing={4} minWidth={!isMobile ? 200 : '100%'}>
+        {isMobile ? (
+          <>
+            <Button
+              onClick={handleOpen}
+              fullWidth
+              variant="contained"
+              startIcon={<FilterListIcon />}
+            >
+              Filters
+            </Button>
+            <Dialog fullScreen open={open} onClose={handleClose}>
+              <Box p={4}>
+                <Stack direction="row" justifyContent="space-between" alignItems="center">
+                  <Typography fontSize="24px" variant="h3">
+                    Filters
+                  </Typography>
+                  <IconButton onClick={handleClose}>
+                    <Close />
+                  </IconButton>
+                </Stack>
+                <Categories />
+                <PriceRange />
+              </Box>
+            </Dialog>
+          </>
+        ) : (
+          <>
+            <Typography fontSize="24px" variant="h3">
+              Filters
+            </Typography>
+            <Categories />
+            <PriceRange />
+          </>
+        )}
+      </Stack> */
+}

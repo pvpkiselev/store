@@ -15,8 +15,10 @@ function PriceRange() {
   };
 
   return (
-    <Box width="100%">
-      <Typography fontSize={18}>Price, $</Typography>
+    <Box width="100%" pb={3}>
+      <Typography fontSize={18} pb={3}>
+        Price, $
+      </Typography>
       <Slider
         getAriaLabel={() => 'Price'}
         value={localRange}

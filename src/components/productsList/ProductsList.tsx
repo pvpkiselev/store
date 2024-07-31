@@ -22,13 +22,22 @@ function ProductsList() {
 
   return (
     <Stack gap={6} width="100%" pb={10}>
-      <Typography variant="h4" component="h2" fontSize="24px">
+      <Typography fontSize="24px" variant="h3" component="h2">
         {isProductsEmpty ? `${products.length} products` : 'Loading products...'}
       </Typography>
       {isProductsEmpty ? (
         <Grid container spacing={4} wrap="wrap">
           {products.map((product) => (
-            <Grid item xs={12} md={6} lg={3} display="flex" flexDirection="column" key={product.id}>
+            <Grid
+              item
+              xs={12}
+              sm={6}
+              md={4}
+              lg={3}
+              display="flex"
+              flexDirection="column"
+              key={product.id}
+            >
               <ProductCard
                 category={product.category.name}
                 title={product.title}
