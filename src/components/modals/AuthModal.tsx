@@ -43,7 +43,14 @@ function AuthModal(props: AuthModalProps) {
         component: 'form',
         onSubmit: onSubmit,
       }}
-      hideBackdrop={true}
+      slotProps={{
+        backdrop: {
+          sx: {
+            backgroundColor: 'white',
+            opacity: 1,
+          },
+        },
+      }}
     >
       <Stack direction="row" alignItems="center" justifyContent="space-between">
         <DialogTitle variant="h4" fontWeight={400} sx={{ p: 0 }}>

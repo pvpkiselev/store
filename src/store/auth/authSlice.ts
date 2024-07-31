@@ -1,7 +1,8 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { registerUserThunk } from './thunks/registerUserThunk';
 import { loginUserThunk } from './thunks/loginUserThunk';
 import { checkUserThunk } from './thunks/checkUserThunk';
+import { UserResponse } from '@/api/models';
 
 type AuthState = {
   isAuth: boolean;
@@ -25,6 +26,20 @@ const authInitialState: AuthState = {
   error: undefined,
 };
 
+const handleUserFulfilled = (
+  state: AuthState,
+  action: PayloadAction<{ userData: UserResponse; access_token?: string }>
+) => {
+  state.name = action.payload.userData.name;
+  state.email = action.payload.userData.email;
+  state.id = action.payload.userData.email.toString();
+  state.avatar = action.payload.userData.avatar;
+  state.role = action.payload.userData.role;
+  state.isAuth = true;
+  state.status = 'fulfilled';
+  state.error = undefined;
+};
+
 const authSlice = createSlice({
   name: 'auth',
   initialState: authInitialState,
@@ -38,16 +53,7 @@ const authSlice = createSlice({
       .addCase(registerUserThunk.pending, (state) => {
         state.status = 'pending';
       })
-      .addCase(registerUserThunk.fulfilled, (state, action) => {
-        state.name = action.payload.userData.name;
-        state.email = action.payload.userData.email;
-        state.id = action.payload.userData.email.toString();
-        state.avatar = action.payload.userData.avatar;
-        state.role = action.payload.userData.role;
-        state.isAuth = true;
-        state.status = 'fulfilled';
-        state.error = undefined;
-      })
+      .addCase(registerUserThunk.fulfilled, handleUserFulfilled)
       .addCase(registerUserThunk.rejected, (state, action) => {
         state.isAuth = false;
         state.status = 'rejected';
@@ -57,16 +63,7 @@ const authSlice = createSlice({
       .addCase(loginUserThunk.pending, (state) => {
         state.status = 'pending';
       })
-      .addCase(loginUserThunk.fulfilled, (state, action) => {
-        state.name = action.payload.userData.name;
-        state.email = action.payload.userData.email;
-        state.id = action.payload.userData.email.toString();
-        state.avatar = action.payload.userData.avatar;
-        state.role = action.payload.userData.role;
-        state.isAuth = true;
-        state.status = 'fulfilled';
-        state.error = undefined;
-      })
+      .addCase(loginUserThunk.fulfilled, handleUserFulfilled)
       .addCase(loginUserThunk.rejected, (state, action) => {
         state.isAuth = false;
         state.status = 'rejected';
@@ -76,16 +73,7 @@ const authSlice = createSlice({
       .addCase(checkUserThunk.pending, (state) => {
         state.status = 'pending';
       })
-      .addCase(checkUserThunk.fulfilled, (state, action) => {
-        state.name = action.payload.userData.name;
-        state.email = action.payload.userData.email;
-        state.id = action.payload.userData.email.toString();
-        state.avatar = action.payload.userData.avatar;
-        state.role = action.payload.userData.role;
-        state.isAuth = true;
-        state.status = 'fulfilled';
-        state.error = undefined;
-      })
+      .addCase(checkUserThunk.fulfilled, handleUserFulfilled)
       .addCase(checkUserThunk.rejected, (state, action) => {
         state.isAuth = false;
         state.status = 'rejected';
