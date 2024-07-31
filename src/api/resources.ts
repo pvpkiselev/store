@@ -5,4 +5,8 @@ export const resources = {
     login: 'login',
     profile: 'profile',
   },
+  filters: {
+    products: 'products',
+    categories: 'categories',
+  },
 };
