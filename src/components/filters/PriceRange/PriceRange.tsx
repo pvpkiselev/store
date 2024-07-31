@@ -1,16 +1,12 @@
 import { Box, Slider, Typography } from '@mui/material';
 import { useState } from 'react';
 
-function valuetext(value: number) {
-  return `${value}`;
-}
-
 const minDistance = 10;
+const min = 0;
+const max = 300;
 
 function PriceRange() {
-  const [value, setValue] = useState<number[]>([25, 50]);
-  const [min] = useState(0);
-  const [max] = useState(300);
+  const [value, setValue] = useState<number[]>([min, max]);
 
   const handleChange = (_: Event, newValue: number | number[], activeThumb: number) => {
     if (!Array.isArray(newValue)) {
@@ -52,7 +48,6 @@ function PriceRange() {
           value={value}
           onChange={handleChange}
           valueLabelDisplay="auto"
-          getAriaValueText={valuetext}
           disableSwap
           min={min}
           max={max}
