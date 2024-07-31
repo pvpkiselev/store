@@ -7,7 +7,7 @@ import { Close } from '@mui/icons-material';
 
 function Filters() {
   const [open, setOpen] = useState(false);
-  const isMobile = useMediaQuery('(max-width:420px)');
+  const isMobile = useMediaQuery('(max-width:620px)');
 
   const handleOpen = () => {
     setOpen(true);
@@ -18,7 +18,7 @@ function Filters() {
   };
 
   return (
-    <Stack spacing={4} maxWidth={!isMobile ? 200 : '100%'}>
+    <Stack spacing={4} minWidth={!isMobile ? 200 : '100%'}>
       {isMobile ? (
         <>
           <Button onClick={handleOpen} fullWidth variant="contained" startIcon={<FilterListIcon />}>
@@ -34,7 +34,7 @@ function Filters() {
                   <Close />
                 </IconButton>
               </Stack>
-              <Categories height="320px" />
+              <Categories />
               <PriceRange />
             </Box>
           </Dialog>
@@ -44,7 +44,7 @@ function Filters() {
           <Typography fontSize="24px" variant="h6">
             Filters
           </Typography>
-          <Categories height="320px" />
+          <Categories />
           <PriceRange />
         </>
       )}

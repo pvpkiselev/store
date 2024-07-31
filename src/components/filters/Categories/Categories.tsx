@@ -1,30 +1,29 @@
-import { Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel } from '@mui/material';
+import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
+import { useState } from 'react';
 
-function Categories(props: { height: string }) {
-  const { height } = props;
+function Categories() {
+  const [category, setCategory] = useState('');
+
+  const handleChange = (event: SelectChangeEvent) => {
+    setCategory(event.target.value as string);
+  };
 
   return (
-    <FormControl
-      component="fieldset"
-      variant="standard"
-      sx={{
-        height: height,
-        width: '100%',
-        overflowY: 'auto',
-      }}
-    >
-      <FormLabel>
-        <FormGroup sx={{ pl: 2 }}>
-          <FormControlLabel label="1cat" control={<Checkbox name="1cat" />} />
-          <FormControlLabel label="2cat" control={<Checkbox name="2cat" />} />
-          <FormControlLabel label="2cat" control={<Checkbox name="2cat" />} />
-          <FormControlLabel label="2cat" control={<Checkbox name="2cat" />} />
-          <FormControlLabel label="2cat" control={<Checkbox name="2cat" />} />
-          <FormControlLabel label="2cat" control={<Checkbox name="2cat" />} />
-          <FormControlLabel label="2cat" control={<Checkbox name="2cat" />} />
-          <FormControlLabel label="2cat" control={<Checkbox name="2cat" />} />
-        </FormGroup>
-      </FormLabel>
+    <FormControl fullWidth>
+      <InputLabel id="category-label">Category</InputLabel>
+      <Select
+        onChange={handleChange}
+        value={category}
+        autoWidth
+        label="Category"
+        labelId="category-label"
+      >
+        <MenuItem value="">
+          <em>None</em>
+        </MenuItem>
+        <MenuItem value="1">Category1</MenuItem>
+        <MenuItem value="2">Category2</MenuItem>
+      </Select>
     </FormControl>
   );
 }
