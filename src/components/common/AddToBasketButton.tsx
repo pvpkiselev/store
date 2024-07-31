@@ -2,10 +2,10 @@ import { ShoppingCart } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
 
 function AddToBasketButton() {
-  function handleQueryAddToBasket() {}
+  function handleAddToBasket() {}
 
   return (
-    <IconButton onClick={handleQueryAddToBasket}>
+    <IconButton onClick={handleAddToBasket}>
       <ShoppingCart />
     </IconButton>
   );

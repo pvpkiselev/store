@@ -33,13 +33,16 @@ const filtersSlice = createSlice({
       state.priceRange = action.payload;
       state.offset = 0;
     },
-    changeCategoryId(state, action: PayloadAction<number>) {
+    changedCategoryId(state, action: PayloadAction<number>) {
       state.categoryId = action.payload;
       state.offset = 0;
     },
     changedSearchQuery(state, action: PayloadAction<string>) {
       state.searchQuery = action.payload;
       state.offset = 0;
+    },
+    changedOffset(state, action: PayloadAction<number>) {
+      state.offset = state.offset + action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -68,5 +71,6 @@ const filtersSlice = createSlice({
   },
 });
 
-export const { changedPriceRange, changeCategoryId, changedSearchQuery } = filtersSlice.actions;
+export const { changedPriceRange, changedCategoryId, changedSearchQuery, changedOffset } =
+  filtersSlice.actions;
 export const filtersReducer = filtersSlice.reducer;

@@ -1,9 +1,6 @@
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import { useState } from 'react';
 
-import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
-import { useState } from 'react';
-
 function Categories() {
   const [category, setCategory] = useState('');
 
@@ -32,4 +29,3 @@ function Categories() {
 }
 
 export default Categories;
-
