@@ -13,23 +13,20 @@ const getSortedProductsErrorMessage = 'Get Sorted Products Error';
 
 export const getSortedProductsThunk = createAppAsyncThunk<
   GetSortedProductsPayload,
-  { searchQuery: string; priceRange: number[]; categoryId: number; offset: number },
+  { searchQuery: string; priceRange: number[]; categoryId: number | null; limit: number },
   { rejectValue: GetSortedProductsError }
->(
-  'filters/getSortedProducts',
-  async ({ searchQuery, priceRange, categoryId, offset }, thunkAPI) => {
-    try {
-      const response = await thunkAPI.extra.api.filters.getSortedProducts({
-        searchQuery,
-        priceRange,
-        categoryId,
-        offset,
-      });
-      const products = response;
+>('filters/getSortedProducts', async ({ searchQuery, priceRange, categoryId, limit }, thunkAPI) => {
+  try {
+    const response = await thunkAPI.extra.api.filters.getSortedProducts({
+      searchQuery,
+      priceRange,
+      categoryId,
+      limit,
+    });
+    const products = response;
 
-      return { products };
-    } catch (error) {
-      return thunkAPI.rejectWithValue({ errorMessage: getSortedProductsErrorMessage });
-    }
+    return { products };
+  } catch (error) {
+    return thunkAPI.rejectWithValue({ errorMessage: getSortedProductsErrorMessage });
   }
-);
+});

@@ -2,25 +2,26 @@ import { Category, Product } from '@/api/models';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { getCategoriesThunk } from './thunks/getCategoriesThunk';
 import { getSortedProductsThunk } from './thunks/getSortedProductsThunk';
+import { MAX_PRICE, MIN_PRICE, PRODUCTS_LIMIT } from '@/helpers/constants';
 
 type FiltersState = {
   products: Product[];
-  offset: number;
+  limit: number;
   categories: Category[];
   categoryId: number | null;
   priceRange: number[];
-  searchQuery: string | null;
+  searchQuery: string;
   status: 'pending' | 'fulfilled' | 'rejected';
   error: string | undefined;
 };
 
 const filtersInitialState: FiltersState = {
   products: [],
-  offset: 0,
+  limit: PRODUCTS_LIMIT,
   categories: [],
   categoryId: null,
-  priceRange: [0, 300],
-  searchQuery: null,
+  priceRange: [MIN_PRICE, MAX_PRICE],
+  searchQuery: '',
   status: 'fulfilled',
   error: undefined,
 };
@@ -31,18 +32,18 @@ const filtersSlice = createSlice({
   reducers: {
     changedPriceRange(state, action: PayloadAction<number[]>) {
       state.priceRange = action.payload;
-      state.offset = 0;
+      state.limit = PRODUCTS_LIMIT;
     },
-    changedCategoryId(state, action: PayloadAction<number>) {
+    changedCategoryId(state, action: PayloadAction<number | null>) {
       state.categoryId = action.payload;
-      state.offset = 0;
+      state.limit = PRODUCTS_LIMIT;
     },
     changedSearchQuery(state, action: PayloadAction<string>) {
       state.searchQuery = action.payload;
-      state.offset = 0;
+      state.limit = PRODUCTS_LIMIT;
     },
-    changedOffset(state, action: PayloadAction<number>) {
-      state.offset = state.offset + action.payload;
+    changedLimit(state, action: PayloadAction<number>) {
+      state.limit = state.limit + action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -51,6 +52,7 @@ const filtersSlice = createSlice({
         state.status = 'pending';
       })
       .addCase(getCategoriesThunk.fulfilled, (state, action) => {
+        state.status = 'fulfilled';
         state.categories = action.payload.categories;
       })
       .addCase(getCategoriesThunk.rejected, (state, action) => {
@@ -62,7 +64,11 @@ const filtersSlice = createSlice({
         state.status = 'pending';
       })
       .addCase(getSortedProductsThunk.fulfilled, (state, action) => {
-        state.products = action.payload.products;
+        state.status = 'fulfilled';
+        state.products = action.payload.products.map((product: Product) => ({
+          ...product,
+          count: 1,
+        }));
       })
       .addCase(getSortedProductsThunk.rejected, (state, action) => {
         state.status = 'rejected';
@@ -71,6 +77,6 @@ const filtersSlice = createSlice({
   },
 });
 
-export const { changedPriceRange, changedCategoryId, changedSearchQuery, changedOffset } =
+export const { changedPriceRange, changedCategoryId, changedSearchQuery, changedLimit } =
   filtersSlice.actions;
 export const filtersReducer = filtersSlice.reducer;

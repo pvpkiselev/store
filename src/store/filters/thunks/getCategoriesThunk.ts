@@ -13,7 +13,7 @@ const getCategoriesErrorMessage = 'Get Categories Error';
 
 export const getCategoriesThunk = createAppAsyncThunk<
   GetCategoriesPayload,
-  Record<string, never>,
+  void,
   { rejectValue: GetCategoriesError }
 >('filters/getCategories', async (_, thunkAPI) => {
   try {

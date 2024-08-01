@@ -2,25 +2,24 @@ import { Card, CardContent, CardMedia, Stack, Typography } from '@mui/material';
 import AddToBasketButton from '../common/AddToBasketButton';
 import { Link } from 'react-router-dom';
 import { checkImageUrl } from '@/utils/checkImageUrl';
+import { cleanUrl } from '@/utils/cleanUrl';
+import { Product } from '@/api/models';
 import placeholderImage from '@public/images/placeholder-image.jpg';
 
-interface ProductProps {
-  image: string;
-  price: number;
-  title: string;
-  category: string;
-  id?: number;
+interface ProductCardProps {
+  product: Product;
 }
 
-function ProductCard(props: ProductProps) {
-  const { image, title, category, price, id } = props;
+function ProductCard({ product }: ProductCardProps) {
+  const { images, title, category, price, id } = product;
   const bgColor = '#F6F6F6';
   const borderRadius = '12px';
   const textColor = '#808080';
   const categoryFontSize = '16px';
 
-  const isImageExist = checkImageUrl(image);
-  const imageUrl = isImageExist ? image : placeholderImage;
+  const cleanedImageUrl = cleanUrl(images[0]);
+  const isImageExist = checkImageUrl(cleanedImageUrl);
+  const imageUrl = isImageExist ? cleanedImageUrl : placeholderImage;
 
   return (
     <Card
@@ -47,14 +46,14 @@ function ProductCard(props: ProductProps) {
           <CardContent sx={{ width: '100%', padding: '0px !important' }}>
             <Stack direction="row" alignItems="center" justifyContent="space-between">
               <Typography fontWeight={700}>{`$ ${price}`}</Typography>
-              <AddToBasketButton />
+              <AddToBasketButton product={product} />
             </Stack>
           </CardContent>
           <CardContent sx={{ width: '100%', padding: '0px !important' }}>
             <Stack>
               <Typography color={textColor}>{title}</Typography>
               <Typography color={textColor} fontSize={categoryFontSize}>
-                Category: {category}
+                Category: {category.name}
               </Typography>
             </Stack>
           </CardContent>
