@@ -1,33 +1,48 @@
+import { MAX_PRICE, MIN_DISTANCE, MIN_PRICE } from '@/helpers/constants';
+import { selectPriceRange } from '@/store/filters/filtersSelectors';
+import { changedPriceRange } from '@/store/filters/filtersSlice';
+import { useAppDispatch, useAppSelector } from '@/store/redux';
 import { Box, Slider, Typography } from '@mui/material';
 import { useState } from 'react';
 
-const minDistance = 10;
-const min = 0;
-const max = 300;
-
 function PriceRange() {
-  const [localRange, setLocalRange] = useState<number[]>([min, max]);
+  const priceRange = useAppSelector(selectPriceRange);
+  const dispatch = useAppDispatch();
+  const [localRange, setLocalRange] = useState<number[]>(priceRange);
 
-  const handleChange = (_event: Event, range: number | number[]) => {
+  const handleLocalPriceRangeChange = (
+    _event: Event | React.SyntheticEvent<Element, Event>,
+    range: number | number[]
+  ) => {
     if (Array.isArray(range)) {
       setLocalRange(range);
     }
   };
 
+  const handlePriceRangeChangeCommitted = (
+    _event: Event | React.SyntheticEvent<Element, Event>,
+    range: number | number[]
+  ) => {
+    if (Array.isArray(range)) {
+      dispatch(changedPriceRange(range));
+    }
+  };
+
   return (
-    <Box width="100%" pb={3}>
+    <Box width="100%" pb={10}>
       <Typography fontSize={18} pb={3}>
         Price, $
       </Typography>
       <Slider
         getAriaLabel={() => 'Price'}
         value={localRange}
-        onChange={handleChange}
         valueLabelDisplay="auto"
         disableSwap
-        min={min}
-        max={max}
-        step={minDistance}
+        min={MIN_PRICE}
+        max={MAX_PRICE}
+        step={MIN_DISTANCE}
+        onChange={handleLocalPriceRangeChange}
+        onChangeCommitted={handlePriceRangeChangeCommitted}
       />
       <Box display="flex" justifyContent="space-between">
         <Typography fontSize="14px">from {localRange[0]}</Typography>

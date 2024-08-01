@@ -3,6 +3,7 @@ import AddToBasketButton from '../common/AddToBasketButton';
 import { Link } from 'react-router-dom';
 import { checkImageUrl } from '@/utils/checkImageUrl';
 import placeholderImage from '@public/images/placeholder-image.jpg';
+import { cleanUrl } from '@/utils/cleanUrl';
 
 interface ProductProps {
   image: string;
@@ -19,8 +20,9 @@ function ProductCard(props: ProductProps) {
   const textColor = '#808080';
   const categoryFontSize = '16px';
 
-  const isImageExist = checkImageUrl(image);
-  const imageUrl = isImageExist ? image : placeholderImage;
+  const cleanedImageUrl = cleanUrl(image);
+  const isImageExist = checkImageUrl(cleanedImageUrl);
+  const imageUrl = isImageExist ? cleanedImageUrl : placeholderImage;
 
   return (
     <Card

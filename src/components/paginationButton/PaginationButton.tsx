@@ -1,9 +1,8 @@
 import { useAppDispatch, useAppSelector } from '@/store/redux';
 import { selectFiltersStatus } from '@/store/filters/filtersSelectors';
-import { changedOffset } from '@/store/filters/filtersSlice';
 import { LoadingButton } from '@mui/lab';
-
-const DEFAULT_LIMIT = 20;
+import { PRODUCTS_LIMIT } from '@/helpers/constants';
+import { changedLimit } from '@/store/filters/filtersSlice';
 
 function PaginationButton() {
   const dispatch = useAppDispatch();
@@ -11,7 +10,7 @@ function PaginationButton() {
   const isPending = status === 'pending';
 
   const handleOffsetChange = () => {
-    dispatch(changedOffset(DEFAULT_LIMIT));
+    dispatch(changedLimit(PRODUCTS_LIMIT));
   };
 
   return (

@@ -1,16 +1,17 @@
+import { DEFAULT_PRODUCTS_OFFSET } from '@/helpers/constants';
 import { Config, fetchData } from './axiosConfig';
 import { Product } from './models';
 import { resources } from './resources';
 
 export interface GetSortedProducts {
-  searchQuery: string | null;
+  searchQuery: string;
   priceRange: number[];
   categoryId: number | null;
-  offset: number;
+  limit: number;
 }
 
 const getSortedProducts = async (props: GetSortedProducts): Promise<Product[]> => {
-  const { searchQuery, priceRange, categoryId, offset } = props;
+  const { searchQuery, priceRange, categoryId, limit } = props;
   const { products } = resources.filters;
   const url = `${products}/`;
 
@@ -22,8 +23,8 @@ const getSortedProducts = async (props: GetSortedProducts): Promise<Product[]> =
     price_min,
     price_max,
     categoryId: categoryId,
-    offset,
-    limit: 20,
+    offset: DEFAULT_PRODUCTS_OFFSET,
+    limit,
   };
 
   const config: Config = {
