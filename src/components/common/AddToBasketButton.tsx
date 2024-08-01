@@ -9,7 +9,7 @@ interface AddToBasketButtonProps {
   isProductPage?: boolean;
 }
 
-function AddToBasketButton({ product, isProductPage }: AddToBasketButtonProps) {
+function AddToBasketButton({ product, isProductPage = true }: AddToBasketButtonProps) {
   const { handleAddToBasket, handleRemoveFromBasket, isProductInBasket } = useBasket();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
 

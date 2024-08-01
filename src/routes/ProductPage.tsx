@@ -52,7 +52,7 @@ function ProductPage() {
               color={priceColor}
               fontWeight={700}
             >{`$ ${price}`}</Typography>
-            <AddToBasketButton product={product} isProductPage={true} />
+            <AddToBasketButton product={product} isProductPage />
             <Typography fontSize={mainFontSize} color={textColor}>
               Category: {category.name}
             </Typography>
