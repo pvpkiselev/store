@@ -11,6 +11,8 @@ import { Provider } from 'react-redux';
 import { store } from './store/store';
 import BasketPage from './routes/BasketPage';
 import { basketPageLoader } from './loaders/basketPageLoader';
+import { productPageLoader } from './loaders/productPageLoader';
+import ProductPage from './routes/ProductPage';
 
 const router = createBrowserRouter([
   {
@@ -28,8 +30,8 @@ const router = createBrowserRouter([
       },
       {
         path: 'card/:cardId',
-        // element: <ProductCard />,
-        // loader: productCardLoader,
+        element: <ProductPage />,
+        loader: productPageLoader,
       },
       {
         path: '/basket',

@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
@@ -11,19 +10,18 @@ import {
   TextField,
 } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
-import { ArrowBack } from '@mui/icons-material';
+import BackButton from '../common/BackButton';
 
 interface AuthModalProps {
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   onToggle: () => void;
-  onHandleBack: () => void;
   isPending: boolean;
   isRegistered: boolean;
   isOpen: boolean;
 }
 
 function AuthModal(props: AuthModalProps) {
-  const { onSubmit, onToggle, onHandleBack, isPending, isRegistered, isOpen } = props;
+  const { onSubmit, onToggle, isPending, isRegistered, isOpen } = props;
   const title = isRegistered ? 'Sign in' : 'Sign up';
   const dialogContentText = isRegistered ? 'New user?' : 'Already have an account?';
   const toggleText = isRegistered ? 'Create an account' : 'Sign in';
@@ -56,9 +54,7 @@ function AuthModal(props: AuthModalProps) {
         <DialogTitle variant="h4" fontWeight={400} sx={{ p: 0 }}>
           {title}
         </DialogTitle>
-        <Button onClick={onHandleBack} startIcon={<ArrowBack />}>
-          Back
-        </Button>
+        <BackButton />
       </Stack>
       <DialogContent sx={{ p: 0 }}>
         <Stack flexDirection="column" gap={4}>
