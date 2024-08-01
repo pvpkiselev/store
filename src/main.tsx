@@ -9,6 +9,8 @@ import Home from './routes/Home';
 import Auth from './routes/Auth';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
+import BasketPage from './routes/BasketPage';
+import { basketPageLoader } from './loaders/basketPageLoader';
 
 const router = createBrowserRouter([
   {
@@ -24,11 +26,16 @@ const router = createBrowserRouter([
         path: 'home',
         element: <Home />,
       },
-      // { TODO:
-      //   path: 'card/:cardId',
-      //   element: <ProductCard />,
-      //   loader: productCardLoader,
-      // },
+      {
+        path: 'card/:cardId',
+        // element: <ProductCard />,
+        // loader: productCardLoader,
+      },
+      {
+        path: '/basket',
+        element: <BasketPage />,
+        loader: basketPageLoader,
+      },
       {
         path: '/auth',
         element: <Auth />,

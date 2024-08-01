@@ -5,3 +5,5 @@ export const PRODUCTS_MAX_LIMIT = 60;
 export const MIN_DISTANCE = 10;
 export const MIN_PRICE = 0;
 export const MAX_PRICE = 300;
+
+export const BASKET_STORAGE_NAME = 'basketItems';

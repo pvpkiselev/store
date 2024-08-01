@@ -23,4 +23,9 @@ export interface Product {
   description: string;
   category: Category;
   images: string[];
+  count: number;
 }
+
+// export interface BasketItem extends Product {
+//   count: number;
+// }

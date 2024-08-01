@@ -69,12 +69,7 @@ function ProductsList() {
                   flexDirection="column"
                   key={product.id}
                 >
-                  <ProductCard
-                    category={product.category.name}
-                    title={product.title}
-                    price={product.price}
-                    image={product.images[0]}
-                  />
+                  <ProductCard product={product} />
                 </Grid>
               ))}
             </Grid>
