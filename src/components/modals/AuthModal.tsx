@@ -50,7 +50,7 @@ function AuthModal(props: AuthModalProps) {
       }}
     >
       <Stack direction="row" alignItems="center" justifyContent="space-between">
-        <DialogTitle variant="h4" fontWeight={400} sx={{ p: 0 }}>
+        <DialogTitle variant="h4" component="h1" fontWeight={400} sx={{ p: 0 }}>
           {title}
         </DialogTitle>
         <NavigateButton direction="back" variant="text" />

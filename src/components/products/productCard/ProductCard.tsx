@@ -1,10 +1,8 @@
 import { Card, CardContent, CardMedia, Stack, Typography } from '@mui/material';
 import AddToBasketButton from '../../common/AddToBasketButton';
 import { Link } from 'react-router-dom';
-import { checkImageUrl } from '@/utils/checkImageUrl';
-import { cleanUrl } from '@/utils/cleanUrl';
 import { Product } from '@/api/models';
-import placeholderImage from '@public/images/placeholder-image.jpg';
+import { BORDER_RADIUS_M, FONT_SIZE_M, GRAY_BG } from '@/helpers/constants';
 
 interface ProductCardProps {
   product: Product;
@@ -12,14 +10,6 @@ interface ProductCardProps {
 
 function ProductCard({ product }: ProductCardProps) {
   const { images, title, category, price, id } = product;
-  const bgColor = '#F6F6F6';
-  const borderRadius = '12px';
-  const textColor = '#808080';
-  const categoryFontSize = '16px';
-
-  const cleanedImageUrl = cleanUrl(images[0]);
-  const isImageExist = checkImageUrl(cleanedImageUrl);
-  const imageUrl = isImageExist ? cleanedImageUrl : placeholderImage;
 
   return (
     <Card
@@ -27,32 +17,37 @@ function ProductCard({ product }: ProductCardProps) {
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        borderRadius,
+        borderRadius: BORDER_RADIUS_M,
         maxWidth: '100%',
         minWidth: '240px',
         flexGrow: 1,
         paddingInline: 4,
         paddingBlock: 6,
-        backgroundColor: bgColor,
+        backgroundColor: GRAY_BG,
       }}
     >
       <Link to={`/card/${id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
         <Stack gap={2}>
           <CardMedia
             component="img"
-            image={imageUrl}
-            sx={{ borderRadius, maxWidth: '100%', maxHeight: '100%' }}
+            image={images[0]}
+            sx={{
+              borderRadius: BORDER_RADIUS_M,
+              width: '100%',
+              maxHeight: '100%',
+              aspectRatio: '3/2',
+            }}
           />
           <CardContent sx={{ width: '100%', padding: '0px !important' }}>
             <Stack direction="row" alignItems="center" justifyContent="space-between">
-              <Typography fontWeight={700}>{`$ ${price}`}</Typography>
+              <Typography fontWeight={700}>${price}</Typography>
               <AddToBasketButton product={product} isIconButton={true} />
             </Stack>
           </CardContent>
           <CardContent sx={{ width: '100%', padding: '0px !important' }}>
             <Stack>
-              <Typography color={textColor}>{title}</Typography>
-              <Typography color={textColor} fontSize={categoryFontSize}>
+              <Typography color="gray">{title}</Typography>
+              <Typography color="gray" fontSize={FONT_SIZE_M}>
                 Category: {category.name}
               </Typography>
             </Stack>

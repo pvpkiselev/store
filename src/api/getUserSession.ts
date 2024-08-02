@@ -1,4 +1,5 @@
 import { Config, fetchData } from './axiosConfig';
+import { fetchErrors } from './constants';
 import { UserResponse } from './models';
 import { resources } from './resources';
 
@@ -18,7 +19,7 @@ const getUserSession = async (token: string): Promise<UserResponse> => {
     const responseData = await fetchData<UserResponse>(config);
     return responseData;
   } catch (error) {
-    console.error('getUserSession Error', error);
+    console.error(fetchErrors.user_session, error);
     throw error;
   }
 };

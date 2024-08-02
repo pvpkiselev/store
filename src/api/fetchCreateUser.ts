@@ -1,5 +1,5 @@
 import { Config, fetchData } from './axiosConfig';
-import { DEFAULT_AVATAR_URL } from './constants';
+import { DEFAULT_AVATAR_URL, fetchErrors } from './constants';
 import { UserResponse } from './models';
 import { resources } from './resources';
 
@@ -22,7 +22,7 @@ const fetchCreateUser = async (
     const responseData = await fetchData<UserResponse>(config);
     return responseData;
   } catch (error) {
-    console.error('fetchCreateUser Error', error);
+    console.error(fetchErrors.create_user, error);
     throw error;
   }
 };

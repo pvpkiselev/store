@@ -1,4 +1,4 @@
-import { MAX_PRICE, MIN_DISTANCE, MIN_PRICE } from '@/helpers/constants';
+import { FONT_SIZE_S, MAX_PRICE, MIN_DISTANCE, MIN_PRICE } from '@/helpers/constants';
 import { selectPriceRange } from '@/store/filters/filtersSelectors';
 import { changedPriceRange } from '@/store/filters/filtersSlice';
 import { useAppDispatch, useAppSelector } from '@/store/redux';
@@ -45,8 +45,8 @@ function PriceRange() {
         onChangeCommitted={handlePriceRangeChangeCommitted}
       />
       <Box display="flex" justifyContent="space-between">
-        <Typography fontSize="14px">from {localRange[0]}</Typography>
-        <Typography fontSize="14px">to {localRange[1]}</Typography>
+        <Typography fontSize={FONT_SIZE_S}>from {localRange[0]}</Typography>
+        <Typography fontSize={FONT_SIZE_S}>to {localRange[1]}</Typography>
       </Box>
     </Box>
   );

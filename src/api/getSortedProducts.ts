@@ -2,6 +2,7 @@ import { DEFAULT_PRODUCTS_OFFSET } from '@/helpers/constants';
 import { Config, fetchData } from './axiosConfig';
 import { Product } from './models';
 import { resources } from './resources';
+import { fetchErrors } from './constants';
 
 export interface GetSortedProducts {
   searchQuery?: string;
@@ -22,7 +23,7 @@ type ProductsParams = {
 const getSortedProducts = async (props: GetSortedProducts): Promise<Product[]> => {
   const { searchQuery, priceRange, categoryId, limit } = props;
   const { products } = resources.filters;
-  const url = `${products}/`;
+  const url = `${products}`;
 
   const price_min = priceRange[0];
   const price_max = priceRange[1];
@@ -31,10 +32,14 @@ const getSortedProducts = async (props: GetSortedProducts): Promise<Product[]> =
     title: null,
     price_min,
     price_max,
-    categoryId,
+    categoryId: null,
     offset: DEFAULT_PRODUCTS_OFFSET,
     limit,
   };
+
+  if (categoryId) {
+    params.categoryId = categoryId;
+  }
 
   if (searchQuery) {
     params.title = searchQuery;
@@ -50,7 +55,7 @@ const getSortedProducts = async (props: GetSortedProducts): Promise<Product[]> =
     const responseData = await fetchData<Product[]>(config);
     return responseData;
   } catch (error) {
-    console.error('getSortedProducts Error', error);
+    console.error(fetchErrors.sorted_products, error);
     throw error;
   }
 };

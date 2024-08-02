@@ -13,7 +13,7 @@ import {
   selectSearchQuery,
 } from '@/store/filters/filtersSelectors';
 import { getSortedProductsThunk } from '@/store/filters/thunks/getSortedProductsThunk';
-import { PRODUCTS_MAX_LIMIT } from '@/helpers/constants';
+import { FONT_SIZE_H_2, PRODUCTS_MAX_LIMIT } from '@/helpers/constants';
 
 function ProductsList() {
   const [error, setError] = useState<string | null>(null);
@@ -51,7 +51,7 @@ function ProductsList() {
         <Alert severity="error">{error}</Alert>
       ) : (
         <Stack gap={6} width="100%" pb={10}>
-          <Typography fontSize="24px" variant="h3" component="h2">
+          <Typography fontSize={FONT_SIZE_H_2} variant="h2" component="h2">
             {isProductsEmpty ? 'No products found' : `${products.length} products`}
           </Typography>
           {isLoading ? (
@@ -78,7 +78,7 @@ function ProductsList() {
           {!isProductsEmpty && !isEndOfList ? (
             <PaginationButton />
           ) : (
-            <Typography fontSize={18} textAlign="center" color="gray">
+            <Typography textAlign="center" color="gray">
               {isLoading ? 'Loading…' : 'No more products'}
             </Typography>
           )}

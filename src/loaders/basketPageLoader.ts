@@ -8,6 +8,7 @@ export async function basketPageLoader() {
       const parsedItems = JSON.parse(storedItems) as Product[];
       return parsedItems;
     }
+    return [];
   } catch (error) {
     console.error('Failed to load basket items:', error);
     return [];

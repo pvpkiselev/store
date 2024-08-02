@@ -1,6 +1,7 @@
 import { Product } from '@/api/models';
 import CheckoutCard from '@/components/checkoutCard.tsx/CheckoutCard';
 import NavigateButton from '@/components/common/NavigateButton';
+import { BORDER_RADIUS_M, GRAY_BG } from '@/helpers/constants';
 import { selectBasketTotalCount, selectBasketTotalPrice } from '@/store/basket/basketSelectors';
 import { useAppSelector } from '@/store/redux';
 import { getFormattedDate } from '@/utils/getFormattedDate';
@@ -12,9 +13,6 @@ function CheckoutPage() {
   const totalPrice = useAppSelector(selectBasketTotalPrice);
   const totalCount = useAppSelector(selectBasketTotalCount);
   const currentDate = getFormattedDate();
-
-  const borderRadius = '12px';
-  const bgColor = '#F6F6F6';
 
   return (
     <Container maxWidth="md" sx={{ paddingInline: { sm: 4, md: 6 } }}>
@@ -38,8 +36,8 @@ function CheckoutPage() {
             justifyContent="space-between"
             paddingInline={4}
             paddingBlock={6}
-            bgcolor={bgColor}
-            borderRadius={borderRadius}
+            bgcolor={GRAY_BG}
+            borderRadius={BORDER_RADIUS_M}
           >
             <Stack gap={4}>
               <Typography fontSize={24} variant="h2" component="h2">

@@ -1,9 +1,7 @@
 import { Product } from '@/api/models';
+import { BORDER_RADIUS_M } from '@/helpers/constants';
 import useBasket from '@/hooks/useBasket';
-import { checkImageUrl } from '@/utils/checkImageUrl';
-import { cleanUrl } from '@/utils/cleanUrl';
 import { Card, CardContent, CardMedia, Stack, Typography } from '@mui/material';
-import placeholderImage from '@public/images/placeholder-image.jpg';
 import { Link } from 'react-router-dom';
 
 interface CheckoutCardProps {
@@ -15,13 +13,6 @@ function CheckoutCard({ product }: CheckoutCardProps) {
 
   const { images, title, id } = product;
 
-  const borderRadius = '12px';
-  const textColor = '#808080';
-
-  const cleanedImageUrl = cleanUrl(images[0]);
-  const isImageExist = checkImageUrl(cleanedImageUrl);
-  const imageUrl = isImageExist ? cleanedImageUrl : placeholderImage;
-
   const currentProduct = basketItems.find((item) => item.id === product.id);
   const totalProductPrice = currentProduct ? currentProduct.price * currentProduct.count : 0;
   const totalProductCount = currentProduct ? currentProduct.count : null;
@@ -31,7 +22,7 @@ function CheckoutCard({ product }: CheckoutCardProps) {
       elevation={0}
       sx={{
         display: 'flex',
-        borderRadius,
+        borderRadius: BORDER_RADIUS_M,
         maxWidth: '100%',
         minWidth: '240px',
         flexGrow: 1,
@@ -50,12 +41,12 @@ function CheckoutCard({ product }: CheckoutCardProps) {
         >
           <CardMedia
             component="img"
-            image={imageUrl}
-            sx={{ borderRadius, width: '100px', height: '100px' }}
+            image={images[0]}
+            sx={{ borderRadius: BORDER_RADIUS_M, width: '100px', height: '100px' }}
           />
         </Link>
         <CardContent sx={{ padding: '0px !important', flexGrow: 1 }}>
-          <Typography color={textColor}>{title}</Typography>
+          <Typography color="gray">{title}</Typography>
         </CardContent>
         <CardContent sx={{ padding: '0px !important', flexGrow: 0 }}>
           <Stack gap={2} textAlign={{ xs: 'left', sm: 'right' }}>

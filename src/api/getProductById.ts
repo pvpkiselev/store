@@ -1,4 +1,5 @@
 import { Config, fetchData } from './axiosConfig';
+import { fetchErrors } from './constants';
 import { Product } from './models';
 import { resources } from './resources';
 
@@ -16,7 +17,7 @@ const getProductById = async (id: string): Promise<Product> => {
     const responseData = await fetchData<Product>(config);
     return responseData;
   } catch (error) {
-    console.error('Error: fetch get product', error);
+    console.error(fetchErrors.product_by_id, error);
     throw error;
   }
 };

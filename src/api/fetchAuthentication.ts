@@ -1,4 +1,5 @@
 import { Config, fetchData } from './axiosConfig';
+import { fetchErrors } from './constants';
 import { UserAuth } from './models';
 import { resources } from './resources';
 
@@ -21,7 +22,7 @@ const fetchAuthentication = async (email: string, password: string): Promise<Use
     const responseData = await fetchData<UserAuth>(config);
     return responseData;
   } catch (error) {
-    console.error('fetchAuthentication Error', error);
+    console.error(fetchErrors.authentication, error);
     throw error;
   }
 };

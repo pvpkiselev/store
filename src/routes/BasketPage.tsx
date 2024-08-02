@@ -1,6 +1,7 @@
 import { Product } from '@/api/models';
 import BasketCard from '@/components/basket/basketCard/BasketCard';
 import NavigateButton from '@/components/common/NavigateButton';
+import { BORDER_RADIUS_M, GRAY_BG } from '@/helpers/constants';
 import { selectBasketTotalPrice } from '@/store/basket/basketSelectors';
 import { useAppSelector } from '@/store/redux';
 import { Box, Container, Stack, Typography } from '@mui/material';
@@ -11,9 +12,6 @@ function BasketPage() {
   const totalPrice = useAppSelector(selectBasketTotalPrice);
   const isBasketEmpty = basketItems.length === 0;
 
-  const bgColor = '#F6F6F6';
-  const borderRadius = '12px';
-
   return (
     <Container maxWidth="md" sx={{ paddingInline: { sm: 4, md: 6 } }}>
       {isBasketEmpty ? (
@@ -22,10 +20,11 @@ function BasketPage() {
           justifyContent="space-between"
           paddingInline={4}
           paddingBlock={6}
-          bgcolor={bgColor}
-          borderRadius={borderRadius}
+          bgcolor={GRAY_BG}
+          borderRadius={BORDER_RADIUS_M}
+          gap={4}
         >
-          <Typography fontSize="24px" variant="h2" component="h1">
+          <Typography fontSize="40px" variant="h1" component="h1">
             No products in Basket
           </Typography>
           <NavigateButton direction="home" />
@@ -43,9 +42,9 @@ function BasketPage() {
                 ))}
               </Stack>
               <Stack
-                bgcolor={bgColor}
+                bgcolor={GRAY_BG}
                 justifyContent="space-between"
-                borderRadius={borderRadius}
+                borderRadius={BORDER_RADIUS_M}
                 paddingInline={4}
                 paddingBlock={6}
                 maxWidth={{ xs: '100%', sm: 288 }}

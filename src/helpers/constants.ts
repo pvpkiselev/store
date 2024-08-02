@@ -4,6 +4,13 @@ export const PRODUCTS_MAX_LIMIT = 60;
 
 export const MIN_DISTANCE = 10;
 export const MIN_PRICE = 0;
-export const MAX_PRICE = 300;
+export const MAX_PRICE = 1000;
 
 export const BASKET_STORAGE_NAME = 'basketItems';
+
+export const GRAY_BG = '#F6F6F6';
+export const BORDER_RADIUS_M = '12px';
+export const FONT_SIZE_H_1 = 40;
+export const FONT_SIZE_H_2 = 24;
+export const FONT_SIZE_M = 16;
+export const FONT_SIZE_S = 14;

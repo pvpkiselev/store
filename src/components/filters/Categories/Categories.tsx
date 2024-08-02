@@ -15,8 +15,8 @@ function Categories() {
   }, []);
 
   const handleCategoryChange = (event: SelectChangeEvent) => {
-    const value = event.target.value === '' ? null : Number(event.target.value);
-    dispatch(changedCategoryId(value));
+    const validValue = event.target.value === '' ? null : Number(event.target.value);
+    dispatch(changedCategoryId(validValue));
   };
 
   const actualValue = selectedCategoryId === null ? '0' : String(selectedCategoryId);

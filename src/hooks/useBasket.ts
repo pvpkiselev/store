@@ -42,18 +42,20 @@ function useBasket() {
   useEffect(() => {
     const saveBasketToLocalStorage = (items: Product[]) => {
       try {
-        localStorage.setItem(BASKET_STORAGE_NAME, JSON.stringify(items));
-        prevBasketItemsRef.current = items;
+        if (items.length === 0) {
+          localStorage.removeItem(BASKET_STORAGE_NAME);
+          prevBasketItemsRef.current = [];
+        } else {
+          localStorage.setItem(BASKET_STORAGE_NAME, JSON.stringify(items));
+          prevBasketItemsRef.current = items;
+        }
       } catch (error) {
         console.error('Failed to save basket to localStorage:', error);
         toast.error('Failed to save basket to localStorage');
       }
     };
 
-    const isBasketEmpty = basketItems.length === 0;
-    if (!isBasketEmpty) {
-      saveBasketToLocalStorage(basketItems);
-    }
+    saveBasketToLocalStorage(basketItems);
   }, [basketItems]);
 
   const addToBasket = (product: Product) => {
