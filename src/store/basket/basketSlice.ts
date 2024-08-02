@@ -16,7 +16,7 @@ const basketSlice = createSlice({
     addToBasket(state, action: PayloadAction<Product>) {
       const existingItem = state.items.find((item) => item.id === action.payload.id);
       if (existingItem) {
-        existingItem.count = existingItem.count + 1;
+        existingItem.count = action.payload.count;
       } else {
         state.items.push(action.payload);
       }
