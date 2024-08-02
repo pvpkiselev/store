@@ -25,7 +25,3 @@ export interface Product {
   images: string[];
   count: number;
 }
-
-// export interface BasketItem extends Product {
-//   count: number;
-// }

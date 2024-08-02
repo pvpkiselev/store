@@ -1,5 +1,5 @@
 import { Card, CardContent, CardMedia, Stack, Typography } from '@mui/material';
-import AddToBasketButton from '../common/AddToBasketButton';
+import AddToBasketButton from '../../common/AddToBasketButton';
 import { Link } from 'react-router-dom';
 import { checkImageUrl } from '@/utils/checkImageUrl';
 import { cleanUrl } from '@/utils/cleanUrl';
@@ -46,7 +46,7 @@ function ProductCard({ product }: ProductCardProps) {
           <CardContent sx={{ width: '100%', padding: '0px !important' }}>
             <Stack direction="row" alignItems="center" justifyContent="space-between">
               <Typography fontWeight={700}>{`$ ${price}`}</Typography>
-              <AddToBasketButton product={product} />
+              <AddToBasketButton product={product} isIconButton={true} />
             </Stack>
           </CardContent>
           <CardContent sx={{ width: '100%', padding: '0px !important' }}>

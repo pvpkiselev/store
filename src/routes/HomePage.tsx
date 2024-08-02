@@ -1,8 +1,8 @@
 import Filters from '@/components/filters/Filters';
-import ProductsList from '@/components/productsList/ProductsList';
+import ProductsList from '@/components/products/productsList/ProductsList';
 import { Container, Stack } from '@mui/material';
 
-function Home() {
+function HomePage() {
   return (
     <Container maxWidth="xl" sx={{ paddingInline: { sm: 4, md: 6 } }}>
       <Stack direction={{ xs: 'column', md: 'row' }} spacing={6} width="100%">
@@ -13,4 +13,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default HomePage;

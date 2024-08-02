@@ -3,7 +3,7 @@ import { useAppSelector } from '@/store/redux';
 import { AppBar, Container, Stack } from '@mui/material';
 import { Link } from 'react-router-dom';
 import Logo from '@public/logo/logo.svg';
-import Search from '../search/Search';
+import Search from '../filters/search/Search';
 import BasketButton from './buttons/BasketButton';
 import LogoutButton from './buttons/LogoutButton';
 import LoginButton from './buttons/LoginButton';

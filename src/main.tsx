@@ -5,14 +5,16 @@ import { CssBaseline, ThemeProvider } from '@mui/material';
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom';
 import Root from './routes/Root';
 import ErrorPage from './routes/ErrorPage';
-import Home from './routes/Home';
-import Auth from './routes/Auth';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
 import BasketPage from './routes/BasketPage';
 import { basketPageLoader } from './loaders/basketPageLoader';
 import { productPageLoader } from './loaders/productPageLoader';
 import ProductPage from './routes/ProductPage';
+import CheckoutPage from './routes/CheckoutPage';
+import { checkoutPageLoader } from './loaders/checkoutPageLoader';
+import AuthPage from './routes/AuthPage';
+import HomePage from './routes/HomePage';
 
 const router = createBrowserRouter([
   {
@@ -26,7 +28,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'home',
-        element: <Home />,
+        element: <HomePage />,
       },
       {
         path: 'card/:cardId',
@@ -39,8 +41,13 @@ const router = createBrowserRouter([
         loader: basketPageLoader,
       },
       {
+        path: '/checkout',
+        element: <CheckoutPage />,
+        loader: checkoutPageLoader,
+      },
+      {
         path: '/auth',
-        element: <Auth />,
+        element: <AuthPage />,
       },
     ],
   },

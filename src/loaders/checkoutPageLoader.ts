@@ -1,7 +1,7 @@
 import { Product } from '@/api/models';
 import { BASKET_STORAGE_NAME } from '@/helpers/constants';
 
-export async function basketPageLoader() {
+export async function checkoutPageLoader() {
   try {
     const storedItems = localStorage.getItem(BASKET_STORAGE_NAME);
     if (storedItems) {

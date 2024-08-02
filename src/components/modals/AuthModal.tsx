@@ -10,8 +10,7 @@ import {
   TextField,
 } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
-import BackButton from '../common/BackButton';
-
+import NavigateButton from '../common/NavigateButton';
 interface AuthModalProps {
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   onToggle: () => void;
@@ -54,7 +53,7 @@ function AuthModal(props: AuthModalProps) {
         <DialogTitle variant="h4" fontWeight={400} sx={{ p: 0 }}>
           {title}
         </DialogTitle>
-        <BackButton />
+        <NavigateButton direction="back" variant="text" />
       </Stack>
       <DialogContent sx={{ p: 0 }}>
         <Stack flexDirection="column" gap={4}>

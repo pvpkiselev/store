@@ -4,11 +4,20 @@ import { Product } from './models';
 import { resources } from './resources';
 
 export interface GetSortedProducts {
-  searchQuery: string;
+  searchQuery?: string;
   priceRange: number[];
   categoryId: number | null;
   limit: number;
 }
+
+type ProductsParams = {
+  title: string | null;
+  price_min: number;
+  price_max: number;
+  categoryId: number | null;
+  offset: number;
+  limit: number;
+};
 
 const getSortedProducts = async (props: GetSortedProducts): Promise<Product[]> => {
   const { searchQuery, priceRange, categoryId, limit } = props;
@@ -18,14 +27,18 @@ const getSortedProducts = async (props: GetSortedProducts): Promise<Product[]> =
   const price_min = priceRange[0];
   const price_max = priceRange[1];
 
-  const params = {
-    title: searchQuery,
+  const params: ProductsParams = {
+    title: null,
     price_min,
     price_max,
-    categoryId: categoryId,
+    categoryId,
     offset: DEFAULT_PRODUCTS_OFFSET,
     limit,
   };
+
+  if (searchQuery) {
+    params.title = searchQuery;
+  }
 
   const config: Config = {
     method: 'GET',

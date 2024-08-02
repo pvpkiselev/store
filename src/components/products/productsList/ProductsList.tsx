@@ -2,7 +2,7 @@ import { useCallback, useLayoutEffect, useState } from 'react';
 import ProductCard from '../productCard/ProductCard';
 import { Alert, Box, Grid, Stack, Typography } from '@mui/material';
 import ProductsListSkeleton from './ProductsListSkeleton';
-import PaginationButton from '../paginationButton/PaginationButton';
+import PaginationButton from '../../filters/paginationButton/PaginationButton';
 import { useAppDispatch, useAppSelector } from '@/store/redux';
 import {
   selectCurrentCategoryId,

@@ -1,13 +1,7 @@
-import { Box, Typography, Button } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import NavigateButton from '@/components/common/NavigateButton';
+import { Box, Typography } from '@mui/material';
 
 function ErrorPage() {
-  const navigate = useNavigate();
-
-  const handleGoBack = () => {
-    navigate('/');
-  };
-
   return (
     <Box
       sx={{
@@ -26,9 +20,7 @@ function ErrorPage() {
       <Typography variant="body1" gutterBottom>
         Sorry, the page you are looking for does not exist.
       </Typography>
-      <Button variant="contained" color="primary" onClick={handleGoBack} disableElevation>
-        Go to Home
-      </Button>
+      <NavigateButton direction="home" />
     </Box>
   );
 }

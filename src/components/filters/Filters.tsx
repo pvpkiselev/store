@@ -1,6 +1,6 @@
 import { Button, IconButton, Stack, Typography, useMediaQuery, Box, Paper } from '@mui/material';
-import Categories from './Categories/Categories';
-import PriceRange from './PriceRange/PriceRange';
+import Categories from './categories/Categories';
+import PriceRange from './priceRange/PriceRange';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { useState } from 'react';
 import { Close } from '@mui/icons-material';

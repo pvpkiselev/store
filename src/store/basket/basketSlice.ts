@@ -13,22 +13,38 @@ const basketSlice = createSlice({
   name: 'basket',
   initialState: basketInitialState,
   reducers: {
-    addToBasket(state, action: PayloadAction<Product>) {
+    addedToBasket(state, action: PayloadAction<Product>) {
       const existingItem = state.items.find((item) => item.id === action.payload.id);
-      if (existingItem) {
-        existingItem.count = action.payload.count;
-      } else {
-        state.items.push(action.payload);
+      if (!existingItem) {
+        state.items.push({ ...action.payload, count: 1 });
       }
     },
-    removeFromBasket(state, action: PayloadAction<number>) {
+    removedFromBasket(state, action: PayloadAction<number>) {
       state.items = state.items.filter((item) => item.id !== action.payload);
     },
-    setBasket(state, action: PayloadAction<Product[]>) {
+    increasedItemCount(state, action: PayloadAction<number>) {
+      const existingItem = state.items.find((item) => item.id === action.payload);
+      if (existingItem) {
+        existingItem.count += 1;
+      }
+    },
+    decreasedItemCount(state, action: PayloadAction<number>) {
+      const existingItem = state.items.find((item) => item.id === action.payload);
+      if (existingItem) {
+        existingItem.count -= 1;
+      }
+    },
+    basketSet(state, action: PayloadAction<Product[]>) {
       state.items = action.payload;
     },
   },
 });
 
-export const { addToBasket, removeFromBasket, setBasket } = basketSlice.actions;
+export const {
+  addedToBasket,
+  removedFromBasket,
+  increasedItemCount,
+  decreasedItemCount,
+  basketSet,
+} = basketSlice.actions;
 export const basketReducer = basketSlice.reducer;

@@ -65,10 +65,7 @@ const filtersSlice = createSlice({
       })
       .addCase(getSortedProductsThunk.fulfilled, (state, action) => {
         state.status = 'fulfilled';
-        state.products = action.payload.products.map((product: Product) => ({
-          ...product,
-          count: 1,
-        }));
+        state.products = action.payload.products;
       })
       .addCase(getSortedProductsThunk.rejected, (state, action) => {
         state.status = 'rejected';

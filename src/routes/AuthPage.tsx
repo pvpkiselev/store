@@ -1,17 +1,15 @@
 import AuthModal from '@/components/modals/AuthModal';
+import useAppNavigate from '@/hooks/useAppNavigate';
 import useAuth from '@/hooks/useAuth';
 import { selectAuthStatus } from '@/store/auth/authSelectors';
 import { useAppSelector } from '@/store/redux';
 import { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
 
-function Auth() {
+function AuthPage() {
   const [isRegistered, setIsRegistered] = useState(true);
   const { handleLogin, handleRegister } = useAuth();
+  const { goBack } = useAppNavigate();
   const status = useAppSelector(selectAuthStatus);
-  const navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state?.from?.pathname || '/';
 
   const isPending = status === 'pending';
 
@@ -28,7 +26,7 @@ function Auth() {
     try {
       const login = await handleLogin(email, password);
       if (login) {
-        navigate(from, { replace: true });
+        goBack();
       }
     } catch (error) {
       console.error(error);
@@ -46,7 +44,7 @@ function Auth() {
     try {
       const register = await handleRegister(name, email, password);
       if (register) {
-        navigate(from, { replace: true });
+        goBack();
       }
     } catch (error) {
       console.error(error);
@@ -69,4 +67,4 @@ function Auth() {
   );
 }
 
-export default Auth;
+export default AuthPage;

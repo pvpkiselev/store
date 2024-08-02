@@ -1,7 +1,13 @@
 import { Product } from '@/api/models';
 import { BASKET_STORAGE_NAME } from '@/helpers/constants';
 import { selectBasketItems } from '@/store/basket/basketSelectors';
-import { addToBasket, removeFromBasket, setBasket } from '@/store/basket/basketSlice';
+import {
+  addedToBasket,
+  basketSet,
+  decreasedItemCount,
+  increasedItemCount,
+  removedFromBasket,
+} from '@/store/basket/basketSlice';
 import { useAppDispatch, useAppSelector } from '@/store/redux';
 import { useCallback, useEffect, useRef } from 'react';
 import toast from 'react-hot-toast';
@@ -18,7 +24,7 @@ function useBasket() {
         const storedItems = localStorage.getItem(BASKET_STORAGE_NAME);
         if (storedItems) {
           const items = JSON.parse(storedItems);
-          dispatch(setBasket(items));
+          dispatch(basketSet(items));
           prevBasketItemsRef.current = items;
         }
       } catch (error) {
@@ -47,28 +53,54 @@ function useBasket() {
     }
   }, [basketItems]);
 
-  const handleAddToBasket = useCallback(
+  // const addToBasket = useCallback(
+  //   (product: Product) => {
+  //     const existingItem = basketItems.find((item) => item.id === product.id);
+  //     if (existingItem) {
+  //       dispatch(increasedItemCount(product.id));
+  //     } else {
+  //       dispatch(addedToBasket(product));
+  //     }
+  //   },
+  //   [dispatch, basketItems]
+  // );
+
+  // const removeFromBasket = useCallback(
+  //   (productId: number) => {
+  //     const existingItem = basketItems.find((item) => item.id === productId);
+  //     if (existingItem) {
+  //       dispatch(decreasedItemCount(productId));
+  //       if (existingItem.count <= 0) {
+  //         dispatch(removedFromBasket(productId));
+  //       }
+  //     }
+  //   },
+  //   [dispatch, basketItems]
+  // );
+  const addToBasket = useCallback(
     (product: Product) => {
-      try {
-        dispatch(addToBasket(product));
-      } catch (error) {
-        console.error('Failed to add product to basket:', error);
-        toast.error('Failed to add product to basket');
-        dispatch(setBasket(prevBasketItemsRef.current));
-      }
+      dispatch(addedToBasket(product));
     },
     [dispatch, basketItems]
   );
 
-  const handleRemoveFromBasket = useCallback(
+  const removeFromBasket = useCallback(
     (productId: number) => {
-      try {
-        dispatch(removeFromBasket(productId));
-      } catch (error) {
-        console.error('Failed to remove product from basket:', error);
-        toast.error('Failed to remove product from basket');
-        dispatch(setBasket(prevBasketItemsRef.current));
-      }
+      dispatch(removedFromBasket(productId));
+    },
+    [dispatch, basketItems]
+  );
+
+  const increaseItemCount = useCallback(
+    (productId: number) => {
+      dispatch(increasedItemCount(productId));
+    },
+    [dispatch, basketItems]
+  );
+
+  const decreaseItemCount = useCallback(
+    (productId: number) => {
+      dispatch(decreasedItemCount(productId));
     },
     [dispatch, basketItems]
   );
@@ -81,9 +113,11 @@ function useBasket() {
   );
 
   return {
-    handleAddToBasket,
-    handleRemoveFromBasket,
+    addToBasket,
+    removeFromBasket,
     isProductInBasket,
+    increaseItemCount,
+    decreaseItemCount,
     basketItems,
   };
 }
