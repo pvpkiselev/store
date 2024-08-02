@@ -27,11 +27,11 @@ const router = createBrowserRouter([
         element: <Navigate to="/home" replace />,
       },
       {
-        path: 'home',
+        path: '/home',
         element: <HomePage />,
       },
       {
-        path: 'card/:cardId',
+        path: '/card/:cardId',
         element: <ProductPage />,
         loader: productPageLoader,
       },

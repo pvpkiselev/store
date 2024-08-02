@@ -1,5 +1,6 @@
 import { Product } from '@/api/models';
 import { BASKET_STORAGE_NAME } from '@/helpers/constants';
+import { selectIsAuth } from '@/store/auth/authSelectors';
 import { selectBasketItems } from '@/store/basket/basketSelectors';
 import {
   addedToBasket,
@@ -15,7 +16,9 @@ import toast from 'react-hot-toast';
 function useBasket() {
   const dispatch = useAppDispatch();
   const basketItems = useAppSelector(selectBasketItems);
+  const isAuth = useAppSelector(selectIsAuth);
 
+  //TODO: Диспатчить значения из useRef, если произошла ошибка
   const prevBasketItemsRef = useRef<Product[]>([]);
 
   useEffect(() => {
@@ -53,57 +56,37 @@ function useBasket() {
     }
   }, [basketItems]);
 
-  // const addToBasket = useCallback(
-  //   (product: Product) => {
-  //     const existingItem = basketItems.find((item) => item.id === product.id);
-  //     if (existingItem) {
-  //       dispatch(increasedItemCount(product.id));
-  //     } else {
-  //       dispatch(addedToBasket(product));
-  //     }
-  //   },
-  //   [dispatch, basketItems]
-  // );
+  const addToBasket = (product: Product) => {
+    if (!isAuth) {
+      toast.error('You must be logged in to add items to the basket');
+      return;
+    }
+    dispatch(addedToBasket(product));
+  };
 
-  // const removeFromBasket = useCallback(
-  //   (productId: number) => {
-  //     const existingItem = basketItems.find((item) => item.id === productId);
-  //     if (existingItem) {
-  //       dispatch(decreasedItemCount(productId));
-  //       if (existingItem.count <= 0) {
-  //         dispatch(removedFromBasket(productId));
-  //       }
-  //     }
-  //   },
-  //   [dispatch, basketItems]
-  // );
-  const addToBasket = useCallback(
-    (product: Product) => {
-      dispatch(addedToBasket(product));
-    },
-    [dispatch, basketItems]
-  );
+  const removeFromBasket = (productId: number) => {
+    if (!isAuth) {
+      toast.error('You must be logged in to remove items from the basket');
+      return;
+    }
+    dispatch(removedFromBasket(productId));
+  };
 
-  const removeFromBasket = useCallback(
-    (productId: number) => {
-      dispatch(removedFromBasket(productId));
-    },
-    [dispatch, basketItems]
-  );
+  const increaseItemCount = (productId: number) => {
+    if (!isAuth) {
+      toast.error('You must be logged in to increase item count');
+      return;
+    }
+    dispatch(increasedItemCount(productId));
+  };
 
-  const increaseItemCount = useCallback(
-    (productId: number) => {
-      dispatch(increasedItemCount(productId));
-    },
-    [dispatch, basketItems]
-  );
-
-  const decreaseItemCount = useCallback(
-    (productId: number) => {
-      dispatch(decreasedItemCount(productId));
-    },
-    [dispatch, basketItems]
-  );
+  const decreaseItemCount = (productId: number) => {
+    if (!isAuth) {
+      toast.error('You must be logged in to decrease item count');
+      return;
+    }
+    dispatch(decreasedItemCount(productId));
+  };
 
   const isProductInBasket = useCallback(
     (productId: number) => {

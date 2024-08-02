@@ -56,7 +56,7 @@ function useAuth() {
       console.error(error);
       dispatch(logout());
     }
-  }, [dispatch]);
+  }, []);
 
   const handleLogout = useCallback(() => {
     Cookies.remove('token');
