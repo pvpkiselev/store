@@ -13,57 +13,64 @@ function useBasket() {
   const prevBasketItemsRef = useRef<Product[]>([]);
 
   useEffect(() => {
-    try {
-      const storedItems = localStorage.getItem(BASKET_STORAGE_NAME);
-      if (storedItems) {
-        const items = JSON.parse(storedItems);
-        dispatch(setBasket(items));
-        prevBasketItemsRef.current = items;
+    const loadBasketFromLocalStorage = () => {
+      try {
+        const storedItems = localStorage.getItem(BASKET_STORAGE_NAME);
+        if (storedItems) {
+          const items = JSON.parse(storedItems);
+          dispatch(setBasket(items));
+          prevBasketItemsRef.current = items;
+        }
+      } catch (error) {
+        console.error('Failed to load basket from localStorage:', error);
+        toast.error('Failed to load basket from localStorage');
       }
-    } catch (error) {
-      console.error('Failed to load basket from localStorage:', error);
-      toast.error('Failed to load basket from localStorage');
-    }
+    };
+
+    loadBasketFromLocalStorage();
   }, [dispatch]);
 
-  const saveBasketToLocalStorage = useCallback((items: Product[]) => {
-    try {
-      localStorage.setItem(BASKET_STORAGE_NAME, JSON.stringify(items));
-      prevBasketItemsRef.current = items;
-    } catch (error) {
-      console.error('Failed to save basket to localStorage:', error);
-      toast.error('Failed to save basket to localStorage');
+  useEffect(() => {
+    const saveBasketToLocalStorage = (items: Product[]) => {
+      try {
+        localStorage.setItem(BASKET_STORAGE_NAME, JSON.stringify(items));
+        prevBasketItemsRef.current = items;
+      } catch (error) {
+        console.error('Failed to save basket to localStorage:', error);
+        toast.error('Failed to save basket to localStorage');
+      }
+    };
+
+    const isBasketEmpty = basketItems.length === 0;
+    if (!isBasketEmpty) {
+      saveBasketToLocalStorage(basketItems);
     }
-  }, []);
+  }, [basketItems]);
 
   const handleAddToBasket = useCallback(
     (product: Product) => {
       try {
         dispatch(addToBasket(product));
-        const updatedBasketItems = [...basketItems, product];
-        saveBasketToLocalStorage(updatedBasketItems);
       } catch (error) {
         console.error('Failed to add product to basket:', error);
         toast.error('Failed to add product to basket');
         dispatch(setBasket(prevBasketItemsRef.current));
       }
     },
-    [dispatch, basketItems, saveBasketToLocalStorage]
+    [dispatch, basketItems]
   );
 
   const handleRemoveFromBasket = useCallback(
     (productId: number) => {
       try {
         dispatch(removeFromBasket(productId));
-        const updatedBasketItems = basketItems.filter((item) => item.id !== productId);
-        saveBasketToLocalStorage(updatedBasketItems);
       } catch (error) {
         console.error('Failed to remove product from basket:', error);
         toast.error('Failed to remove product from basket');
         dispatch(setBasket(prevBasketItemsRef.current));
       }
     },
-    [dispatch, basketItems, saveBasketToLocalStorage]
+    [dispatch, basketItems]
   );
 
   const isProductInBasket = useCallback(
@@ -73,7 +80,12 @@ function useBasket() {
     [basketItems]
   );
 
-  return { handleAddToBasket, handleRemoveFromBasket, isProductInBasket, basketItems };
+  return {
+    handleAddToBasket,
+    handleRemoveFromBasket,
+    isProductInBasket,
+    basketItems,
+  };
 }
 
 export default useBasket;

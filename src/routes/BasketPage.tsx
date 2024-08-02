@@ -5,7 +5,7 @@ import { useLoaderData } from 'react-router-dom';
 
 function BasketPage() {
   const basketItems = useLoaderData() as Product[];
-  const isBasketNotEmpty = basketItems.length > 0;
+  const isBasketEmpty = basketItems.length === 0;
 
   return (
     <Container maxWidth="md" sx={{ paddingInline: { sm: 4, md: 6 } }}>
@@ -15,14 +15,14 @@ function BasketPage() {
             Shopping Basket
           </Typography>
           <Stack direction="row" gap={6} width="100%">
-            {isBasketNotEmpty ? (
+            {isBasketEmpty ? (
+              <Typography width="100%">No items in basket</Typography>
+            ) : (
               <Stack gap={6} width="100%">
                 {basketItems.map((product) => (
                   <BasketCard key={product.id} product={product} />
                 ))}
               </Stack>
-            ) : (
-              <Typography>No items in basket</Typography>
             )}
             <Box bgcolor="gray">Price</Box>
           </Stack>
