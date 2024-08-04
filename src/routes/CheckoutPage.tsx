@@ -1,17 +1,19 @@
-import { Product } from '@/api/models';
 import CheckoutCard from '@/components/checkoutCard.tsx/CheckoutCard';
 import NavigateButton from '@/components/common/NavigateButton';
 import { BORDER_RADIUS_M, GRAY_BG } from '@/helpers/constants';
-import { selectBasketTotalCount, selectBasketTotalPrice } from '@/store/basket/basketSelectors';
+import {
+  selectCheckoutItems,
+  selectCheckoutTotalCount,
+  selectCheckoutTotalPrice,
+} from '@/store/basket/basketSelectors';
 import { useAppSelector } from '@/store/redux';
 import { getFormattedDate } from '@/utils/getFormattedDate';
 import { Box, Container, Stack, Typography } from '@mui/material';
-import { useLoaderData } from 'react-router-dom';
 
 function CheckoutPage() {
-  const checkoutItems = useLoaderData() as Product[];
-  const totalPrice = useAppSelector(selectBasketTotalPrice);
-  const totalCount = useAppSelector(selectBasketTotalCount);
+  const checkoutItems = useAppSelector(selectCheckoutItems);
+  const totalPrice = useAppSelector(selectCheckoutTotalPrice);
+  const totalCount = useAppSelector(selectCheckoutTotalCount);
   const currentDate = getFormattedDate();
 
   return (
@@ -25,7 +27,7 @@ function CheckoutPage() {
             alignItems="center"
             flexWrap="wrap"
           >
-            <Typography fontSize={40} variant="h2" component="h1">
+            <Typography variant="h1" component="h1">
               My order
             </Typography>
             <NavigateButton direction="home" />
@@ -40,12 +42,12 @@ function CheckoutPage() {
             borderRadius={BORDER_RADIUS_M}
           >
             <Stack gap={4}>
-              <Typography fontSize={24} variant="h2" component="h2">
+              <Typography variant="h2" component="h2">
                 {currentDate}
               </Typography>
-              <Typography color="gray">{totalCount} products</Typography>
+              <Typography>{totalCount} products</Typography>
             </Stack>
-            <Typography fontSize="24px" variant="h3" color="primary">
+            <Typography variant="h2" color="primary">
               ${totalPrice}
             </Typography>
           </Stack>

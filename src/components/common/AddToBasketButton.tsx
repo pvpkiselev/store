@@ -8,6 +8,11 @@ interface AddToBasketButtonProps {
   isIconButton?: boolean;
 }
 
+const basketButtonText = {
+  remove: 'Remove from basket',
+  add: 'Add to basket',
+};
+
 function AddToBasketButton({ product, isIconButton }: AddToBasketButtonProps) {
   const { addToBasket, removeFromBasket, isProductInBasket } = useBasket();
 
@@ -28,7 +33,7 @@ function AddToBasketButton({ product, isIconButton }: AddToBasketButtonProps) {
       onClick={handleBasketClick}
       startIcon={isInBasket ? <RemoveShoppingCart /> : <ShoppingCart color="inherit" />}
     >
-      {isInBasket ? 'Remove from basket' : 'Add to basket'}
+      {isInBasket ? basketButtonText.add : basketButtonText.remove}
     </Button>
   );
 }

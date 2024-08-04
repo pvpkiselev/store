@@ -16,8 +16,7 @@ const getUserSession = async (token: string): Promise<UserResponse> => {
   };
 
   try {
-    const responseData = await fetchData<UserResponse>(config);
-    return responseData;
+    return await fetchData<UserResponse>(config);
   } catch (error) {
     console.error(fetchErrors.user_session, error);
     throw error;

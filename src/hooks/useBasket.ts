@@ -5,21 +5,25 @@ import { selectBasketItems } from '@/store/basket/basketSelectors';
 import {
   addedToBasket,
   basketSet,
+  checkedOutBasket,
   decreasedItemCount,
   increasedItemCount,
   removedFromBasket,
 } from '@/store/basket/basketSlice';
 import { useAppDispatch, useAppSelector } from '@/store/redux';
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect } from 'react';
 import toast from 'react-hot-toast';
+
+const basketErrors = {
+  load: 'Failed to load basket from localStorage:',
+  save: 'Failed to save basket to localStorage:',
+  must_login: 'You must be logged in to use the basket',
+};
 
 function useBasket() {
   const dispatch = useAppDispatch();
   const basketItems = useAppSelector(selectBasketItems);
   const isAuth = useAppSelector(selectIsAuth);
-
-  //TODO: Диспатчить значения из useRef, если произошла ошибка
-  const prevBasketItemsRef = useRef<Product[]>([]);
 
   useEffect(() => {
     const loadBasketFromLocalStorage = () => {
@@ -28,30 +32,27 @@ function useBasket() {
         if (storedItems) {
           const items = JSON.parse(storedItems);
           dispatch(basketSet(items));
-          prevBasketItemsRef.current = items;
         }
       } catch (error) {
-        console.error('Failed to load basket from localStorage:', error);
-        toast.error('Failed to load basket from localStorage');
+        console.error(basketErrors.load, error);
+        toast.error(basketErrors.load);
       }
     };
 
     loadBasketFromLocalStorage();
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
     const saveBasketToLocalStorage = (items: Product[]) => {
       try {
         if (items.length === 0) {
           localStorage.removeItem(BASKET_STORAGE_NAME);
-          prevBasketItemsRef.current = [];
         } else {
           localStorage.setItem(BASKET_STORAGE_NAME, JSON.stringify(items));
-          prevBasketItemsRef.current = items;
         }
       } catch (error) {
-        console.error('Failed to save basket to localStorage:', error);
-        toast.error('Failed to save basket to localStorage');
+        console.error(basketErrors.save, error);
+        toast.error(basketErrors.save);
       }
     };
 
@@ -60,7 +61,7 @@ function useBasket() {
 
   const addToBasket = (product: Product) => {
     if (!isAuth) {
-      toast.error('You must be logged in to add items to the basket');
+      toast.error(basketErrors.must_login);
       return;
     }
     dispatch(addedToBasket(product));
@@ -68,7 +69,7 @@ function useBasket() {
 
   const removeFromBasket = (productId: number) => {
     if (!isAuth) {
-      toast.error('You must be logged in to remove items from the basket');
+      toast.error(basketErrors.must_login);
       return;
     }
     dispatch(removedFromBasket(productId));
@@ -76,7 +77,7 @@ function useBasket() {
 
   const increaseItemCount = (productId: number) => {
     if (!isAuth) {
-      toast.error('You must be logged in to increase item count');
+      toast.error(basketErrors.must_login);
       return;
     }
     dispatch(increasedItemCount(productId));
@@ -84,7 +85,7 @@ function useBasket() {
 
   const decreaseItemCount = (productId: number) => {
     if (!isAuth) {
-      toast.error('You must be logged in to decrease item count');
+      toast.error(basketErrors.must_login);
       return;
     }
     dispatch(decreasedItemCount(productId));
@@ -97,12 +98,25 @@ function useBasket() {
     [basketItems]
   );
 
+  const checkoutBasket = () => {
+    if (!isAuth) {
+      toast.error(basketErrors.must_login);
+      return;
+    }
+
+    return new Promise<void>((resolve) => {
+      dispatch(checkedOutBasket());
+      resolve();
+    });
+  };
+
   return {
     addToBasket,
     removeFromBasket,
     isProductInBasket,
     increaseItemCount,
     decreaseItemCount,
+    checkoutBasket,
     basketItems,
   };
 }

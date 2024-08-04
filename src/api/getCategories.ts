@@ -13,8 +13,7 @@ const getCategories = async (): Promise<Category[]> => {
   };
 
   try {
-    const responseData = await fetchData<Category[]>(config);
-    return responseData;
+    return await fetchData<Category[]>(config);
   } catch (error) {
     console.error(fetchErrors.categories, error);
     throw error;

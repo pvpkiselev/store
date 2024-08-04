@@ -7,6 +7,7 @@ import Search from '../filters/search/Search';
 import BasketButton from './buttons/BasketButton';
 import LogoutButton from './buttons/LogoutButton';
 import LoginButton from './buttons/LoginButton';
+import AppLink from '../common/AppLink';
 
 function Header() {
   const isAuth = useAppSelector(selectIsAuth);
@@ -49,15 +50,13 @@ function Header() {
             gap={6}
             order={{ xs: 3, md: 2 }}
           >
-            <Link to="/" style={{ textDecoration: 'none', color: 'initial' }}>
-              Home
-            </Link>
-            <Link to="#" style={{ textDecoration: 'none', color: 'initial' }}>
+            <AppLink to="/">Home</AppLink>
+            <AppLink to="#" disabled={true}>
               Catalog
-            </Link>
-            <Link to="#" style={{ textDecoration: 'none', color: 'initial' }}>
+            </AppLink>
+            <AppLink to="#" disabled={true}>
               About
-            </Link>
+            </AppLink>
           </Stack>
 
           <Stack direction="row" alignItems="center" flexGrow={1} order={{ xs: 4, md: 3 }}>

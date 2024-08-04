@@ -1,8 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { registerUserThunk } from './thunks/registerUserThunk';
-import { loginUserThunk } from './thunks/loginUserThunk';
-import { checkUserThunk } from './thunks/checkUserThunk';
 import { UserResponse } from '@/api/models';
+import { checkUserThunk, loginUserThunk, registerUserThunk } from './authThunks';
 
 type AuthState = {
   isAuth: boolean;
@@ -12,7 +10,6 @@ type AuthState = {
   avatar: string | null;
   role: string | null;
   status: 'pending' | 'fulfilled' | 'rejected';
-  error: string | undefined;
 };
 
 const authInitialState: AuthState = {
@@ -23,7 +20,6 @@ const authInitialState: AuthState = {
   avatar: null,
   role: null,
   status: 'fulfilled',
-  error: undefined,
 };
 
 const handleUserFulfilled = (
@@ -37,7 +33,6 @@ const handleUserFulfilled = (
   state.role = action.payload.userData.role;
   state.isAuth = true;
   state.status = 'fulfilled';
-  state.error = undefined;
 };
 
 const authSlice = createSlice({
@@ -54,30 +49,27 @@ const authSlice = createSlice({
         state.status = 'pending';
       })
       .addCase(registerUserThunk.fulfilled, handleUserFulfilled)
-      .addCase(registerUserThunk.rejected, (state, action) => {
+      .addCase(registerUserThunk.rejected, (state) => {
         state.isAuth = false;
         state.status = 'rejected';
-        state.error = action.payload?.errorMessage;
       })
 
       .addCase(loginUserThunk.pending, (state) => {
         state.status = 'pending';
       })
       .addCase(loginUserThunk.fulfilled, handleUserFulfilled)
-      .addCase(loginUserThunk.rejected, (state, action) => {
+      .addCase(loginUserThunk.rejected, (state) => {
         state.isAuth = false;
         state.status = 'rejected';
-        state.error = action.payload?.errorMessage;
       })
 
       .addCase(checkUserThunk.pending, (state) => {
         state.status = 'pending';
       })
       .addCase(checkUserThunk.fulfilled, handleUserFulfilled)
-      .addCase(checkUserThunk.rejected, (state, action) => {
+      .addCase(checkUserThunk.rejected, (state) => {
         state.isAuth = false;
         state.status = 'rejected';
-        state.error = action.payload?.errorMessage;
       });
   },
 });

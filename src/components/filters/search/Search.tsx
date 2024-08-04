@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { useAppDispatch } from '@/store/redux';
 import { useDebouncedCallback } from 'use-debounce';
 import { FormControl, InputAdornment, TextField } from '@mui/material';
@@ -10,7 +10,7 @@ function Search() {
   const dispatch = useAppDispatch();
   const [localQuery, setLocalQuery] = useState('');
 
-  const isEmptyQuery = useMemo(() => localQuery === '', [localQuery]);
+  const isEmptyQuery = localQuery === '';
 
   const handleSearchQueryDispatch = useDebouncedCallback((query: string) => {
     dispatch(changedSearchQuery(query));

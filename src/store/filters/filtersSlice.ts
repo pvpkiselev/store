@@ -1,8 +1,7 @@
 import { Category, Product } from '@/api/models';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { getCategoriesThunk } from './thunks/getCategoriesThunk';
-import { getSortedProductsThunk } from './thunks/getSortedProductsThunk';
 import { MAX_PRICE, MIN_PRICE, PRODUCTS_LIMIT } from '@/helpers/constants';
+import { getCategoriesThunk, getSortedProductsThunk } from './filtersThunks';
 
 type FiltersState = {
   products: Product[];
@@ -12,7 +11,6 @@ type FiltersState = {
   priceRange: number[];
   searchQuery: string;
   status: 'pending' | 'fulfilled' | 'rejected';
-  error: string | undefined;
 };
 
 const filtersInitialState: FiltersState = {
@@ -23,7 +21,6 @@ const filtersInitialState: FiltersState = {
   priceRange: [MIN_PRICE, MAX_PRICE],
   searchQuery: '',
   status: 'fulfilled',
-  error: undefined,
 };
 
 const filtersSlice = createSlice({
@@ -53,11 +50,10 @@ const filtersSlice = createSlice({
       })
       .addCase(getCategoriesThunk.fulfilled, (state, action) => {
         state.status = 'fulfilled';
-        state.categories = action.payload.categories;
+        state.categories = action.payload;
       })
-      .addCase(getCategoriesThunk.rejected, (state, action) => {
+      .addCase(getCategoriesThunk.rejected, (state) => {
         state.status = 'rejected';
-        state.error = action.payload?.errorMessage;
       })
 
       .addCase(getSortedProductsThunk.pending, (state) => {
@@ -65,11 +61,10 @@ const filtersSlice = createSlice({
       })
       .addCase(getSortedProductsThunk.fulfilled, (state, action) => {
         state.status = 'fulfilled';
-        state.products = action.payload.products;
+        state.products = action.payload;
       })
-      .addCase(getSortedProductsThunk.rejected, (state, action) => {
+      .addCase(getSortedProductsThunk.rejected, (state) => {
         state.status = 'rejected';
-        state.error = action.payload?.errorMessage;
       });
   },
 });

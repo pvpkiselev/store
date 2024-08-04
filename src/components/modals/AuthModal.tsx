@@ -19,12 +19,32 @@ interface AuthModalProps {
   isOpen: boolean;
 }
 
+const authTitle = {
+  signIn: 'Sign in',
+  signUp: 'Sign up',
+};
+
+const authContentText = {
+  signIn: 'New user?',
+  signUp: 'Already have an account?',
+};
+
+const authToggleText = {
+  signIn: 'Create an account',
+  signUp: 'Sign in',
+};
+
+const authButtonText = {
+  signIn: 'Sign in',
+  signUp: 'Sign up',
+};
+
 function AuthModal(props: AuthModalProps) {
   const { onSubmit, onToggle, isPending, isRegistered, isOpen } = props;
-  const title = isRegistered ? 'Sign in' : 'Sign up';
-  const dialogContentText = isRegistered ? 'New user?' : 'Already have an account?';
-  const toggleText = isRegistered ? 'Create an account' : 'Sign in';
-  const submitButtonText = isRegistered ? 'Sign in' : 'Sign up';
+  const title = isRegistered ? authTitle.signIn : authTitle.signUp;
+  const dialogContentText = isRegistered ? authContentText.signIn : authContentText.signUp;
+  const toggleText = isRegistered ? authToggleText.signIn : authToggleText.signUp;
+  const submitButtonText = isRegistered ? authButtonText.signIn : authButtonText.signUp;
 
   return (
     <Dialog
@@ -50,7 +70,7 @@ function AuthModal(props: AuthModalProps) {
       }}
     >
       <Stack direction="row" alignItems="center" justifyContent="space-between">
-        <DialogTitle variant="h4" component="h1" fontWeight={400} sx={{ p: 0 }}>
+        <DialogTitle variant="h2" component="h1" sx={{ p: 0 }}>
           {title}
         </DialogTitle>
         <NavigateButton direction="back" variant="text" />

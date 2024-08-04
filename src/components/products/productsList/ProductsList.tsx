@@ -12,8 +12,8 @@ import {
   selectProducts,
   selectSearchQuery,
 } from '@/store/filters/filtersSelectors';
-import { getSortedProductsThunk } from '@/store/filters/thunks/getSortedProductsThunk';
-import { FONT_SIZE_H_2, PRODUCTS_MAX_LIMIT } from '@/helpers/constants';
+import { PRODUCTS_MAX_LIMIT } from '@/helpers/constants';
+import { getSortedProductsThunk } from '@/store/filters/filtersThunks';
 
 function ProductsList() {
   const [error, setError] = useState<string | null>(null);
@@ -35,14 +35,15 @@ function ProductsList() {
       setError('Products Fetch Failed');
       console.error(error);
     }
-  }, [searchQuery, priceRange, categoryId, limit, dispatch]);
+  }, [searchQuery, priceRange, categoryId, limit]);
 
   useLayoutEffect(() => {
     getProductsList();
   }, [getProductsList]);
 
-  const isProductsEmpty = products.length === 0;
-  const isEndOfList = products.length % limit !== 0 || products.length === PRODUCTS_MAX_LIMIT;
+  const productsLength = products.length;
+  const isProductsEmpty = productsLength === 0;
+  const isEndOfList = productsLength % limit !== 0 || productsLength === PRODUCTS_MAX_LIMIT;
   const isLoading = status === 'pending';
 
   return (
@@ -51,8 +52,8 @@ function ProductsList() {
         <Alert severity="error">{error}</Alert>
       ) : (
         <Stack gap={6} width="100%" pb={10}>
-          <Typography fontSize={FONT_SIZE_H_2} variant="h2" component="h2">
-            {isProductsEmpty ? 'No products found' : `${products.length} products`}
+          <Typography variant="h2" component="h2">
+            {isProductsEmpty ? 'No products found' : `${productsLength} products`}
           </Typography>
           {isLoading ? (
             <ProductsListSkeleton />

@@ -1,4 +1,5 @@
-export function cleanUrl(url: string): string {
-  const cleanedUrl = url.replace(/^[^\w]+|[^\w]+$/g, '');
-  return cleanedUrl;
+export function cleanUrl(text: string) {
+  const urlRegex = /https?:\/\/[^\s"']+/g;
+  const links = text.match(urlRegex);
+  return links ? links[0] : undefined;
 }

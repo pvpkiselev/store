@@ -14,8 +14,7 @@ const getProductById = async (id: string): Promise<Product> => {
   };
 
   try {
-    const responseData = await fetchData<Product>(config);
-    return responseData;
+    return await fetchData<Product>(config);
   } catch (error) {
     console.error(fetchErrors.product_by_id, error);
     throw error;

@@ -1,8 +1,9 @@
-import { Card, CardContent, CardMedia, Stack, Typography } from '@mui/material';
+import { Card, CardContent, Stack, Typography } from '@mui/material';
 import AddToBasketButton from '../../common/AddToBasketButton';
 import { Link } from 'react-router-dom';
 import { Product } from '@/api/models';
-import { BORDER_RADIUS_M, FONT_SIZE_M, GRAY_BG } from '@/helpers/constants';
+import { BORDER_RADIUS_M, GRAY_BG } from '@/helpers/constants';
+import ImageSlider from '@/components/common/ImageSlider';
 
 interface ProductCardProps {
   product: Product;
@@ -28,28 +29,17 @@ function ProductCard({ product }: ProductCardProps) {
     >
       <Link to={`/card/${id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
         <Stack gap={2}>
-          <CardMedia
-            component="img"
-            image={images[0]}
-            sx={{
-              borderRadius: BORDER_RADIUS_M,
-              width: '100%',
-              maxHeight: '100%',
-              aspectRatio: '3/2',
-            }}
-          />
+          <ImageSlider images={images} />
           <CardContent sx={{ width: '100%', padding: '0px !important' }}>
             <Stack direction="row" alignItems="center" justifyContent="space-between">
-              <Typography fontWeight={700}>${price}</Typography>
+              <Typography variant="h4">${price}</Typography>
               <AddToBasketButton product={product} isIconButton={true} />
             </Stack>
           </CardContent>
           <CardContent sx={{ width: '100%', padding: '0px !important' }}>
             <Stack>
-              <Typography color="gray">{title}</Typography>
-              <Typography color="gray" fontSize={FONT_SIZE_M}>
-                Category: {category.name}
-              </Typography>
+              <Typography variant="body1">{title}</Typography>
+              <Typography variant="body2">Category: {category.name}</Typography>
             </Stack>
           </CardContent>
         </Stack>

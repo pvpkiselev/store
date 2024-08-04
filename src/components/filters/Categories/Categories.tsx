@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { selectCategories, selectCurrentCategoryId } from '@/store/filters/filtersSelectors';
 import { changedCategoryId } from '@/store/filters/filtersSlice';
-import { getCategoriesThunk } from '@/store/filters/thunks/getCategoriesThunk';
 import { useAppDispatch, useAppSelector } from '@/store/redux';
 import { Box, FormControl, MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material';
+import { getCategoriesThunk } from '@/store/filters/filtersThunks';
 
 function Categories() {
   const dispatch = useAppDispatch();
@@ -19,11 +19,12 @@ function Categories() {
     dispatch(changedCategoryId(validValue));
   };
 
-  const actualValue = selectedCategoryId === null ? '0' : String(selectedCategoryId);
+  const defaultValue = '0';
+  const actualValue = selectedCategoryId === null ? defaultValue : String(selectedCategoryId);
 
   return (
     <Box width="100%">
-      <Typography fontSize={18} pb={3}>
+      <Typography variant="h6" pb={3}>
         Category
       </Typography>
       <FormControl fullWidth>
@@ -34,7 +35,7 @@ function Categories() {
           displayEmpty
           inputProps={{ 'aria-label': 'Without label' }}
         >
-          <MenuItem value="0">All</MenuItem>
+          <MenuItem value={defaultValue}>All</MenuItem>
           {categories.map((category) => (
             <MenuItem key={category.id} value={category.id}>
               {category.name}

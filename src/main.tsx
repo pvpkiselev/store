@@ -8,11 +8,9 @@ import ErrorPage from './routes/ErrorPage';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
 import BasketPage from './routes/BasketPage';
-import { basketPageLoader } from './loaders/basketPageLoader';
 import { productPageLoader } from './loaders/productPageLoader';
 import ProductPage from './routes/ProductPage';
 import CheckoutPage from './routes/CheckoutPage';
-import { checkoutPageLoader } from './loaders/checkoutPageLoader';
 import AuthPage from './routes/AuthPage';
 import HomePage from './routes/HomePage';
 
@@ -38,12 +36,10 @@ const router = createBrowserRouter([
       {
         path: '/basket',
         element: <BasketPage />,
-        loader: basketPageLoader,
       },
       {
         path: '/checkout',
         element: <CheckoutPage />,
-        loader: checkoutPageLoader,
       },
       {
         path: '/auth',

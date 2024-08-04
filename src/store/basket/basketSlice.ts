@@ -2,11 +2,13 @@ import { Product } from '@/api/models';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface BasketState {
-  items: Product[];
+  basketItems: Product[];
+  checkoutItems: Product[];
 }
 
 const basketInitialState: BasketState = {
-  items: [],
+  basketItems: [],
+  checkoutItems: [],
 };
 
 const basketSlice = createSlice({
@@ -14,28 +16,32 @@ const basketSlice = createSlice({
   initialState: basketInitialState,
   reducers: {
     addedToBasket(state, action: PayloadAction<Product>) {
-      const existingItem = state.items.find((item) => item.id === action.payload.id);
+      const existingItem = state.basketItems.find((item) => item.id === action.payload.id);
       if (!existingItem) {
-        state.items.push({ ...action.payload, count: 1 });
+        state.basketItems.push({ ...action.payload, count: 1 });
       }
     },
     removedFromBasket(state, action: PayloadAction<number>) {
-      state.items = state.items.filter((item) => item.id !== action.payload);
+      state.basketItems = state.basketItems.filter((item) => item.id !== action.payload);
     },
     increasedItemCount(state, action: PayloadAction<number>) {
-      const existingItem = state.items.find((item) => item.id === action.payload);
+      const existingItem = state.basketItems.find((item) => item.id === action.payload);
       if (existingItem) {
         existingItem.count += 1;
       }
     },
     decreasedItemCount(state, action: PayloadAction<number>) {
-      const existingItem = state.items.find((item) => item.id === action.payload);
+      const existingItem = state.basketItems.find((item) => item.id === action.payload);
       if (existingItem) {
         existingItem.count -= 1;
       }
     },
     basketSet(state, action: PayloadAction<Product[]>) {
-      state.items = action.payload;
+      state.basketItems = action.payload;
+    },
+    checkedOutBasket(state) {
+      state.checkoutItems = [...state.basketItems];
+      state.basketItems = [];
     },
   },
 });
@@ -46,5 +52,6 @@ export const {
   increasedItemCount,
   decreasedItemCount,
   basketSet,
+  checkedOutBasket,
 } = basketSlice.actions;
 export const basketReducer = basketSlice.reducer;

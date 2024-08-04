@@ -19,8 +19,7 @@ const fetchCreateUser = async (
   };
 
   try {
-    const responseData = await fetchData<UserResponse>(config);
-    return responseData;
+    return await fetchData<UserResponse>(config);
   } catch (error) {
     console.error(fetchErrors.create_user, error);
     throw error;

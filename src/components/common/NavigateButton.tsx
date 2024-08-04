@@ -5,12 +5,17 @@ import { Button, ButtonProps } from '@mui/material';
 interface Styles {
   color?: ButtonProps['color'];
   variant?: ButtonProps['variant'];
-  direction: 'home' | 'back' | 'checkout';
+  direction: 'home' | 'back';
 }
+
+const navButtonText = {
+  home: 'Go To Home',
+  back: 'Go Back',
+};
 
 function NavigateButton(props: Styles) {
   const { color = 'primary', variant = 'contained', direction } = props;
-  const { goBack, goToHome, goToCheckout } = useAppNavigate();
+  const { goBack, goToHome } = useAppNavigate();
 
   const handleClick = () => {
     switch (direction) {
@@ -20,16 +25,12 @@ function NavigateButton(props: Styles) {
       case 'back':
         goBack();
         break;
-      case 'checkout':
-        goToCheckout();
-        break;
       default:
         console.error('Unknown direction:', direction);
     }
   };
 
-  const buttonText =
-    direction === 'home' ? 'Go To Home' : direction === 'checkout' ? 'Go To Checkout' : 'Go Back';
+  const buttonText = direction === 'home' ? navButtonText.home : navButtonText.back;
 
   const isIcon = direction === 'back';
 

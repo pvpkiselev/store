@@ -1,4 +1,4 @@
-import { FONT_SIZE_S, MAX_PRICE, MIN_DISTANCE, MIN_PRICE } from '@/helpers/constants';
+import { MAX_PRICE, MIN_DISTANCE, MIN_PRICE } from '@/helpers/constants';
 import { selectPriceRange } from '@/store/filters/filtersSelectors';
 import { changedPriceRange } from '@/store/filters/filtersSlice';
 import { useAppDispatch, useAppSelector } from '@/store/redux';
@@ -30,7 +30,7 @@ function PriceRange() {
 
   return (
     <Box width="100%" pb={10}>
-      <Typography fontSize={18} pb={3}>
+      <Typography variant="h6" pb={3}>
         Price, $
       </Typography>
       <Slider
@@ -45,8 +45,8 @@ function PriceRange() {
         onChangeCommitted={handlePriceRangeChangeCommitted}
       />
       <Box display="flex" justifyContent="space-between">
-        <Typography fontSize={FONT_SIZE_S}>from {localRange[0]}</Typography>
-        <Typography fontSize={FONT_SIZE_S}>to {localRange[1]}</Typography>
+        <Typography variant="body2">from {localRange[0]}</Typography>
+        <Typography variant="body2">to {localRange[1]}</Typography>
       </Box>
     </Box>
   );

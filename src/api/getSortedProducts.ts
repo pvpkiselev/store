@@ -52,8 +52,7 @@ const getSortedProducts = async (props: GetSortedProducts): Promise<Product[]> =
   };
 
   try {
-    const responseData = await fetchData<Product[]>(config);
-    return responseData;
+    return await fetchData<Product[]>(config);
   } catch (error) {
     console.error(fetchErrors.sorted_products, error);
     throw error;

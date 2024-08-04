@@ -14,7 +14,7 @@ function ErrorPage() {
         padding: 2,
       }}
     >
-      <Typography variant="h3" component="h1" gutterBottom>
+      <Typography variant="h1" component="h1" gutterBottom>
         404 - Page Not Found
       </Typography>
       <Typography variant="body1" gutterBottom>

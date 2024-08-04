@@ -5,7 +5,6 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 import { useState } from 'react';
 import { Close } from '@mui/icons-material';
 import { theme } from '@/theme/theme';
-import { FONT_SIZE_H_2 } from '@/helpers/constants';
 
 function Filters() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -52,7 +51,7 @@ function Filters() {
       >
         <Stack rowGap={6}>
           <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
-            <Typography fontSize={FONT_SIZE_H_2} variant="h2" component="h2">
+            <Typography variant="h2" component="h2">
               Filters
             </Typography>
             {isMobile && (

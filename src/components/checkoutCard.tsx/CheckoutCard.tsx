@@ -1,6 +1,7 @@
 import { Product } from '@/api/models';
 import { BORDER_RADIUS_M } from '@/helpers/constants';
-import useBasket from '@/hooks/useBasket';
+import { selectCheckoutItems } from '@/store/basket/basketSelectors';
+import { useAppSelector } from '@/store/redux';
 import { Card, CardContent, CardMedia, Stack, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 
@@ -9,11 +10,11 @@ interface CheckoutCardProps {
 }
 
 function CheckoutCard({ product }: CheckoutCardProps) {
-  const { basketItems } = useBasket();
+  const checkoutItems = useAppSelector(selectCheckoutItems);
 
   const { images, title, id } = product;
 
-  const currentProduct = basketItems.find((item) => item.id === product.id);
+  const currentProduct = checkoutItems.find((item) => item.id === product.id);
   const totalProductPrice = currentProduct ? currentProduct.price * currentProduct.count : 0;
   const totalProductCount = currentProduct ? currentProduct.count : null;
 

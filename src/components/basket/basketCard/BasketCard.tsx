@@ -1,36 +1,23 @@
 import { Product } from '@/api/models';
-import { BORDER_RADIUS_M, FONT_SIZE_M, FONT_SIZE_S, GRAY_BG } from '@/helpers/constants';
+import { BORDER_RADIUS_M, GRAY_BG } from '@/helpers/constants';
 import useBasket from '@/hooks/useBasket';
-import { Add, DeleteForever, Remove } from '@mui/icons-material';
-import { Box, Card, CardContent, CardMedia, IconButton, Stack, Typography } from '@mui/material';
+import { Card, CardContent, CardMedia, Stack, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
+import BasketCounter from '../basketCounter/BasketCounter';
 
 interface BasketCardProps {
   product: Product;
 }
 
 function BasketCard({ product }: BasketCardProps) {
-  const { increaseItemCount, decreaseItemCount, removeFromBasket, basketItems } = useBasket();
-
-  const handleIncreaseCount = () => {
-    increaseItemCount(product.id);
-  };
-
-  const handleDecreaseCount = () => {
-    decreaseItemCount(product.id);
-  };
-
-  const handleRemoveFromBasket = () => {
-    removeFromBasket(product.id);
-  };
+  const { basketItems } = useBasket();
 
   const { images, title, category, price, id } = product;
 
-  const currentProduct = basketItems.find((item) => item.id === product.id);
+  const currentProduct = basketItems.find((item) => item.id === id);
   const totalProductPrice = currentProduct ? currentProduct.price * currentProduct.count : 0;
   const currentProductCount = currentProduct ? currentProduct.count : 0;
   const isProductExist = currentProductCount !== 0;
-  const isRemoveButtonActive = currentProductCount <= 1;
 
   return (
     isProductExist && (
@@ -47,7 +34,7 @@ function BasketCard({ product }: BasketCardProps) {
           backgroundColor: GRAY_BG,
         }}
       >
-        <Stack direction="row" gap={4} alignItems="center" width="100%">
+        <Stack direction="row" gap={4} alignItems="center" width="100%" flexWrap="wrap">
           <Link
             to={`/card/${id}`}
             style={{
@@ -63,34 +50,21 @@ function BasketCard({ product }: BasketCardProps) {
               sx={{ borderRadius: BORDER_RADIUS_M, width: '100px', height: '100px' }}
             />
           </Link>
-          <CardContent sx={{ width: '100%', padding: '0px !important', flexGrow: 1 }}>
+          <CardContent sx={{ minWidth: 288, padding: '0px !important', flexGrow: 1 }}>
             <Stack gap={1}>
-              <Typography color="gray">{title}</Typography>
-              <Typography color="gray" fontSize={FONT_SIZE_M}>
-                Category: {category.name}
-              </Typography>
+              <Typography variant="body1">{title}</Typography>
+              <Typography variant="body2">Category: {category.name}</Typography>
             </Stack>
           </CardContent>
-          <Stack direction="row" alignItems="center">
-            <IconButton onClick={handleDecreaseCount} disabled={isRemoveButtonActive}>
-              <Remove />
-            </IconButton>
-            <Typography fontWeight={700}>{currentProductCount}</Typography>
-            <IconButton onClick={handleIncreaseCount}>
-              <Add />
-            </IconButton>
+          <Stack direction="row" flexGrow={1}>
+            <BasketCounter id={id} />
+            <CardContent sx={{ width: '100%', padding: '0px !important' }}>
+              <Stack gap={2} alignItems="right" textAlign={{ xs: 'left', sm: 'right' }}>
+                <Typography variant="body2">for one: ${price}</Typography>
+                <Typography fontWeight={700}>${totalProductPrice}</Typography>
+              </Stack>
+            </CardContent>
           </Stack>
-          <CardContent sx={{ width: '100%', padding: '0px !important' }}>
-            <Stack gap={2} alignItems="right" textAlign={{ xs: 'left', sm: 'right' }}>
-              <Typography fontSize={FONT_SIZE_S}>for one: ${price}</Typography>
-              <Typography fontWeight={700}>${totalProductPrice}</Typography>
-              <Box>
-                <IconButton onClick={handleRemoveFromBasket}>
-                  <DeleteForever />
-                </IconButton>
-              </Box>
-            </Stack>
-          </CardContent>
         </Stack>
       </Card>
     )
